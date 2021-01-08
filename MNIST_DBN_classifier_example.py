@@ -1,16 +1,20 @@
-import torch
 import numpy as np
-import pandas as pd
-import os
-from RBM import RBM
+import torch
+import random
+from DBN import DBN
 from load_dataset import MNIST
 from tqdm import trange
+import pandas as pd
 
 def initialize_model():
 	model = torch.nn.Sequential(
-		torch.nn.Linear(784, 2500),
+		torch.nn.Linear(784, 512),
 		torch.nn.Sigmoid(),
-		torch.nn.Linear(2500, 10),
+		torch.nn.Linear(512, 128),
+		torch.nn.Sigmoid(),
+		torch.nn.Linear(128, 64),
+		torch.nn.Sigmoid(),
+		torch.nn.Linear(64, 10),
 		torch.nn.Softmax(dim=1),
 	)
 	return model
@@ -67,25 +71,29 @@ def train(model, x, y, train_x, train_y, test_x, test_y, epochs=5):
 if __name__ == '__main__':
 	mnist = MNIST()
 	train_x, train_y, test_x, test_y = mnist.load_dataset()
-	
-	vn = train_x.shape[1]
-	hn = 2500
-	rbm = RBM(vn, hn)
-	rbm.load_rbm('mnist_trained_rbm.pt')
 
+	layers = [512, 128, 64, 10]
+
+	dbn = DBN(train_x.shape[1], layers)
+	dbn.train_DBN(train_x)
+
+	model = dbn.initialize_model()
+
+	completed_model = torch.nn.Sequential(model, torch.nn.Softmax(dim=1))
+	torch.save(completed_model, 'mnist_trained_dbn.pt')
+
+	print(completed_model)
+
+	print('\n'*3)
+	print("Without Pre-Training")
 	model = initialize_model()
-
 	model, progress = train(model, train_x, train_y, train_x, train_y, test_x, test_y)
 	progress = pd.DataFrame(np.array(progress))
 	progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
-	progress.to_csv('RBM_without_pretraining_classifier.csv', index=False)
+	progress.to_csv('DBN_without_pretraining_classifier.csv', index=False)
 
-	model = initialize_model()
-
-	model[0].weight = torch.nn.Parameter(rbm.W)
-	model[0].bias = torch.nn.Parameter(rbm.hb)
-
-	model, progress = train(model, train_x, train_y, train_x, train_y, test_x, test_y)
+	print("With Pre-Training")
+	model, progress = train(completed_model, train_x, train_y, train_x, train_y, test_x, test_y)
 	progress = pd.DataFrame(np.array(progress))
 	progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
-	progress.to_csv('RBM_pretrained_classifier.csv', index=False)
+	progress.to_csv('DBN_with_pretraining_classifier.csv', index=False)
