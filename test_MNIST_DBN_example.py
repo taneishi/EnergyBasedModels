@@ -41,7 +41,7 @@ if __name__ == '__main__':
 
 	layers = [512, 128, 64, 10]
 	dbn = DBN(train_x.shape[1], layers)
-	dbn.layer_parameters = torch.load('mnist_trained_dbn.pt')
+	dbn.layer_parameters = torch.load('models/mnist_trained_dbn.pt')
 	
 	for n in range(10):
 		x = test_x[np.where(test_y==n)[0][0]]

@@ -42,7 +42,7 @@ if __name__ == '__main__':
 	hn = 2500
 
 	rbm = RBM(vn, hn)
-	rbm.load_rbm('mnist_trained_rbm.pt')
+	rbm.load_rbm('models/mnist_trained_rbm.pt')
 	
 	for n in range(10):
 		x = test_x[np.where(test_y==n)[0][0]]

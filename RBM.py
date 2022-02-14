@@ -162,9 +162,9 @@ if __name__ == '__main__':
 	
 	dataset = trial_dataset()
 
-	rbm = RBM(10, 100, epochs=50, mode='bernoulli', lr=0.001, optimizer='adam', gpu=True, savefile='save_example.pt', early_stopping_patience=50)
+	rbm = RBM(10, 100, epochs=50, mode='bernoulli', lr=0.001, optimizer='adam', gpu=True, savefile='models/save_example.pt', early_stopping_patience=50)
 	print("Before Training:", rbm.vb)
 	rbm.train(dataset)
 	print("After Training:", rbm.vb)
-	rbm.load_rbm('save_example.pt')
+	rbm.load_rbm('models/save_example.pt')
 	print("After Loading:", rbm.vb)
