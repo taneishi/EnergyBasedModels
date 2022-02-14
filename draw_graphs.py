@@ -25,6 +25,9 @@ def image_beautifier(names, final_name):
     cv2.imwrite(final_name, img)
 
 if __name__ == '__main__':
+    os.makedirs('generated', exist_ok=True)
+    os.makedirs('images', exist_ok=True)
+
     files = [
             'results/DBN_without_pretraining_classifier.csv',
             'results/DBN_with_pretraining_and_input_binarization_classifier.csv',
@@ -47,9 +50,10 @@ if __name__ == '__main__':
             if name == 'acc':
                 plt.ylim([-0.01, 1.01])
 
-            plt.savefig('images/'+file[8:-4]+'_'+name+'.jpg')
+            plt.savefig('generated/'+file[8:-4]+'_'+name+'.jpg')
 
-    files = ['images/'+i for i in sorted(os.listdir('images/'))]
+    files = ['generated/'+i for i in sorted(os.listdir('generated/'))]
+
     DBN = files[:-4]
     RBM = files[-4:]
 
