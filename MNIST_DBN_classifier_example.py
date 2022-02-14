@@ -5,6 +5,7 @@ from DBN import DBN
 from load_dataset import MNIST
 from tqdm import trange
 import pandas as pd
+import os
 
 def initialize_model():
     model = torch.nn.Sequential(
@@ -73,6 +74,8 @@ def train(model, x, y, train_x, train_y, test_x, test_y, epochs=5):
     return model, progress
 
 if __name__ == '__main__':
+    os.makedirs('results', exist_ok=True)
+
     mnist = MNIST()
     train_x, train_y, test_x, test_y = mnist.load_dataset()
 
@@ -88,7 +91,6 @@ if __name__ == '__main__':
 
     print(completed_model)
 
-    print('\n'*3)
     print('Without Pre-Training')
     model = initialize_model()
     model, progress = train(model, train_x, train_y, train_x, train_y, test_x, test_y)

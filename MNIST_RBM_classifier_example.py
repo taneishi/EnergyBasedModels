@@ -1,10 +1,10 @@
 import torch
 import numpy as np
 import pandas as pd
-import os
 from RBM import RBM
 from load_dataset import MNIST
 from tqdm import trange
+import os
 
 def initialize_model():
     model = torch.nn.Sequential(
@@ -69,6 +69,8 @@ def train(model, x, y, train_x, train_y, test_x, test_y, epochs=5):
     return model, progress
 
 if __name__ == '__main__':
+    os.makedirs('results', exist_ok=True)
+
     mnist = MNIST()
     train_x, train_y, test_x, test_y = mnist.load_dataset()
     
