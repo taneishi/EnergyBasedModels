@@ -76,8 +76,8 @@ if __name__ == '__main__':
     
     vn = train_x.shape[1]
     hn = 2500
-    rbm = RBM(vn, hn)
-    rbm.load_rbm('models/mnist_trained_rbm.pt')
+    rbm = RBM(vn, hn, savefile='models/mnist_trained_rbm.pt')
+    rbm.train(train_x)
 
     model = initialize_model()
 
