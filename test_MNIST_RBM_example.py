@@ -1,12 +1,12 @@
 import torch
 import numpy as np
 import pandas as pd
-import os
 from RBM import RBM
 from load_dataset import MNIST
 import cv2
 from PIL import Image
 from matplotlib import pyplot as plt
+import os
 
 def image_beautifier(names, final_name):
     image_names = sorted(names)
@@ -29,12 +29,14 @@ def image_beautifier(names, final_name):
 def gen_displayable_images():
     suffix = '_image.jpg'
     for n in range(10):
-        prefix = './images_RBM/digitwise/'+str(n)+'_'
+        prefix = 'images_RBM/digitwise/'+str(n)+'_'
         names = ['original', 'hidden', 'reconstructed']
         names = [prefix+name+suffix for name in names]
-        image_beautifier(names, './images_RBM/'+str(n)+'.jpg')
+        image_beautifier(names, 'images_RBM/'+str(n)+'.jpg')
 
 if __name__ == '__main__':
+    os.makedirs('images_RBM/digitwise', exist_ok=True)
+
     mnist = MNIST()
     train_x, train_y, test_x, test_y = mnist.load_dataset()
     vn = train_x.shape[1]
@@ -67,13 +69,13 @@ if __name__ == '__main__':
         hidden_image = np.reshape(hidden_image, (50, 50))
         gen_image = np.reshape(gen_image, (28, 28))
 
-        image = image.astype(np.int)
-        hidden_image = hidden_image.astype(np.int)
-        gen_image = gen_image.astype(np.int)
+        image = image.astype(np.int32)
+        hidden_image = hidden_image.astype(np.int32)
+        gen_image = gen_image.astype(np.int32)
 
         print(image.shape, hidden_image.shape, gen_image.shape)
         
-        prefix = './images_RBM/digitwise/'+str(n)+'_'
+        prefix = 'images_RBM/digitwise/'+str(n)+'_'
         suffix = '_image.jpg'
         
         plt.cla()

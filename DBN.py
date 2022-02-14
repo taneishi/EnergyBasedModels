@@ -142,6 +142,5 @@ if __name__ == '__main__':
     model = dbn.initialize_model()
 
     y = dbn.reconstructor(dataset)
-    print('\n\n\n')
     print('MAE of an all 0 reconstructor:', torch.mean(dataset).item())
     print('MAE between reconstructed and original sample:', torch.mean(torch.abs(y - dataset)).item())

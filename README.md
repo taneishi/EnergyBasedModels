@@ -1,4 +1,4 @@
-# Deep Belief Networks in PyTorch
+# Energy Based Models in PyTorch
 
 The aim of this repository is to create Energy Based Models (EBM) in generalized manner, so as to allow modifications and variations.
 
