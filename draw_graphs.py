@@ -42,14 +42,14 @@ if __name__ == '__main__':
             plt.plot(np.array(range(1, df.shape[0]+1)), df.T[0], label='test - '+name)
             plt.plot(np.array(range(1, df.shape[0]+1)), df.T[1], label='train - '+name)
             plt.legend()
-            plt.title(file[:-4]+'_'+name)
+            plt.title(file[8:-4]+'_'+name)
 
             if name == 'acc':
                 plt.ylim([-0.01, 1.01])
 
-            plt.savefig('./images/'+file[:-4]+'_'+name+'.jpg')
+            plt.savefig('images/'+file[8:-4]+'_'+name+'.jpg')
 
-    files = ['./images/'+i for i in sorted(os.listdir('./images/'))]
+    files = ['images/'+i for i in sorted(os.listdir('images/'))]
     DBN = files[:-4]
     RBM = files[-4:]
 
@@ -59,7 +59,7 @@ if __name__ == '__main__':
     RBM_acc = [RBM[i] for i in range(0, len(RBM), 2)]
     RBM_loss = [RBM[i] for i in range(1, len(RBM), 2)]
 
-    image_beautifier(DBN_acc, './images/DBN_acc.jpg')
-    image_beautifier(DBN_loss, './images/DBN_loss.jpg')
-    image_beautifier(RBM_acc, './images/RBM_acc.jpg')
-    image_beautifier(RBM_loss, './images/RBM_loss.jpg')
+    image_beautifier(DBN_acc, 'images/DBN_acc.jpg')
+    image_beautifier(DBN_loss, 'images/DBN_loss.jpg')
+    image_beautifier(RBM_acc, 'images/RBM_acc.jpg')
+    image_beautifier(RBM_loss, 'images/RBM_loss.jpg')
