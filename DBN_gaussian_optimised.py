@@ -112,7 +112,7 @@ def trial_dataset():
     for _ in range(1000):
         t = []
         for _ in range(10):
-            if random.random()>0.75:
+            if random.random() > 0.75:
                 t.append(0)
             else:
                 t.append(1)
@@ -121,7 +121,7 @@ def trial_dataset():
     for _ in range(1000):
         t = []
         for _ in range(10):
-            if random.random()>0.75:
+            if random.random() > 0.75:
                 t.append(1)
             else:
                 t.append(0)
