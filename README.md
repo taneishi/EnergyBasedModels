@@ -85,26 +85,27 @@ epochs | test loss | train loss | test acc | train acc
 
 ## Images of RBM
 
-<img src=images_RBM/0.jpg" alt="image 1" width="300" />
-<img src=images_RBM/1.jpg" alt="image 1" width="300" />
-<img src=images_RBM/2.jpg" alt="image 1" width="300" />
-<img src=images_RBM/3.jpg" alt="image 1" width="300" />
-<img src=images_RBM/4.jpg" alt="image 1" width="300" />
-<img src=images_RBM/5.jpg" alt="image 1" width="300" />
-<img src=images_RBM/6.jpg" alt="image 1" width="300" />
-<img src=images_RBM/7.jpg" alt="image 1" width="300" />
-<img src=images_RBM/8.jpg" alt="image 1" width="300" />
-<img src=images_RBM/9.jpg" alt="image 1" width="300" />
+<img src="images_RBM/0.jpg" alt="image 0" width="300" />
+<img src="images_RBM/1.jpg" alt="image 1" width="300" />
+<img src="images_RBM/2.jpg" alt="image 2" width="300" />
+<img src="images_RBM/3.jpg" alt="image 3" width="300" />
+<img src="images_RBM/4.jpg" alt="image 4" width="300" />
+<img src="images_RBM/5.jpg" alt="image 5" width="300" />
+<img src="images_RBM/6.jpg" alt="image 6" width="300" />
+<img src="images_RBM/7.jpg" alt="image 7" width="300" />
+<img src="images_RBM/8.jpg" alt="image 8" width="300" />
+<img src="images_RBM/9.jpg" alt="image 9" width="300" />
 
 ## Images of DBN
 
-<img src=images_DBN/0.jpg" alt="image 1" width="300" />
-<img src=images_DBN/1.jpg" alt="image 1" width="300" />
-<img src=images_DBN/2.jpg" alt="image 1" width="300" />
-<img src=images_DBN/3.jpg" alt="image 1" width="300" />
-<img src=images_DBN/4.jpg" alt="image 1" width="300" />
-<img src=images_DBN/5.jpg" alt="image 1" width="300" />
-<img src=images_DBN/6.jpg" alt="image 1" width="300" />
-<img src=images_DBN/7.jpg" alt="image 1" width="300" />
-<img src=images_DBN/8.jpg" alt="image 1" width="300" />
-<img src=images_DBN/9.jpg" alt="image 1" width="300" />
+<img src="images_DBN/0.jpg" alt="image 0" width="300" />
+<img src="images_DBN/1.jpg" alt="image 1" width="300" />
+<img src="images_DBN/2.jpg" alt="image 2" width="300" />
+<img src="images_DBN/3.jpg" alt="image 3" width="300" />
+<img src="images_DBN/4.jpg" alt="image 4" width="300" />
+<img src="images_DBN/5.jpg" alt="image 5" width="300" />
+<img src="images_DBN/6.jpg" alt="image 6" width="300" />
+<img src="images_DBN/7.jpg" alt="image 7" width="300" />
+<img src="images_DBN/8.jpg" alt="image 8" width="300" />
+<img src="images_DBN/9.jpg" alt="image 9" width="300" />
+
