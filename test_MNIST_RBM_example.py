@@ -70,6 +70,7 @@ if __name__ == '__main__':
         # revert transforms.ToTensor() scaling
         image = (image*255)[0]
         hidden_image = (hidden_image*255)[0]
+        gen_image = (gen_image*255)[0]
 
         image = np.reshape(image, (28, 28))
         hidden_image = np.reshape(hidden_image, (50, 50))
