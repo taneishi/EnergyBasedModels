@@ -85,26 +85,26 @@ epochs | test loss | train loss | test acc | train acc
 
 ## Images of RBM
 
-![Image-0](./images_RBM/0.jpg)
-![Image-1](./images_RBM/1.jpg)
-![Image-2](./images_RBM/2.jpg)
-![Image-3](./images_RBM/3.jpg)
-![Image-4](./images_RBM/4.jpg)
-![Image-5](./images_RBM/5.jpg)
-![Image-6](./images_RBM/6.jpg)
-![Image-7](./images_RBM/7.jpg)
-![Image-8](./images_RBM/8.jpg)
-![Image-9](./images_RBM/9.jpg)
+<img src=images_RBM/0.jpg" alt="image 1" width="300" />
+<img src=images_RBM/1.jpg" alt="image 1" width="300" />
+<img src=images_RBM/2.jpg" alt="image 1" width="300" />
+<img src=images_RBM/3.jpg" alt="image 1" width="300" />
+<img src=images_RBM/4.jpg" alt="image 1" width="300" />
+<img src=images_RBM/5.jpg" alt="image 1" width="300" />
+<img src=images_RBM/6.jpg" alt="image 1" width="300" />
+<img src=images_RBM/7.jpg" alt="image 1" width="300" />
+<img src=images_RBM/8.jpg" alt="image 1" width="300" />
+<img src=images_RBM/9.jpg" alt="image 1" width="300" />
 
 ## Images of DBN
 
-![Image-0](./images_DBN/0.jpg)
-![Image-1](./images_DBN/1.jpg)
-![Image-2](./images_DBN/2.jpg)
-![Image-3](./images_DBN/3.jpg)
-![Image-4](./images_DBN/4.jpg)
-![Image-5](./images_DBN/5.jpg)
-![Image-6](./images_DBN/6.jpg)
-![Image-7](./images_DBN/7.jpg)
-![Image-8](./images_DBN/8.jpg)
-![Image-9](./images_DBN/9.jpg)
+<img src=images_DBN/0.jpg" alt="image 1" width="300" />
+<img src=images_DBN/1.jpg" alt="image 1" width="300" />
+<img src=images_DBN/2.jpg" alt="image 1" width="300" />
+<img src=images_DBN/3.jpg" alt="image 1" width="300" />
+<img src=images_DBN/4.jpg" alt="image 1" width="300" />
+<img src=images_DBN/5.jpg" alt="image 1" width="300" />
+<img src=images_DBN/6.jpg" alt="image 1" width="300" />
+<img src=images_DBN/7.jpg" alt="image 1" width="300" />
+<img src=images_DBN/8.jpg" alt="image 1" width="300" />
+<img src=images_DBN/9.jpg" alt="image 1" width="300" />
