@@ -1,12 +1,13 @@
-import torch
-import numpy as np
 import pandas as pd
-from DBN import DBN
-from load_dataset import MNIST
-import cv2
-from PIL import Image
+import numpy as np
 from matplotlib import pyplot as plt
+import torch
+from torchvision import datasets, transforms
+from PIL import Image
+import cv2
 import os
+
+from DBN import DBN
 
 def image_beautifier(names, final_name):
     image_names = sorted(names)
@@ -37,11 +38,13 @@ def gen_displayable_images():
 if __name__ == '__main__':
     os.makedirs('images_DBN/digitwise', exist_ok=True)
 
-    mnist = MNIST()
-    train_x, train_y, test_x, test_y = mnist.load_dataset()
+    test_dataset = datasets.MNIST('dataset', download=True, train=False, transform=transforms.ToTensor())
+    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=len(test_dataset))
+    for test_x, test_y in test_loader:
+        test_x = test_x.view(-1, 784)
 
     layers = [512, 128, 64, 10]
-    dbn = DBN(train_x.shape[1], layers)
+    dbn = DBN(test_x.shape[1], layers)
     dbn.layer_parameters = torch.load('models/mnist_trained_dbn.pt')
     
     for n in range(10):
@@ -52,9 +55,9 @@ if __name__ == '__main__':
         hidden_image = hidden_image.numpy()
         image = x.numpy()
 
-        image = mnist.inv_transform_normalizer(image)[0]
+        # revert transforms.ToTensor() scaling
+        image = (image*255)[0]
         hidden_image = (hidden_image*255)[0]
-        gen_image = mnist.inv_transform_normalizer(gen_image)[0]
 
         image = np.reshape(image, (28, 28))
         hidden_image = np.reshape(hidden_image, (5, 2))
@@ -64,8 +67,6 @@ if __name__ == '__main__':
         hidden_image = hidden_image.astype(np.int32)
         gen_image = gen_image.astype(np.int32)
 
-        print(image.shape, hidden_image.shape, gen_image.shape)
-        
         prefix = 'images_DBN/digitwise/'+str(n)+'_'
         suffix = '_image.jpg'
         
@@ -83,5 +84,7 @@ if __name__ == '__main__':
         plt.imshow(gen_image, cmap='gray')
         plt.title('reconstructed image')
         plt.savefig(prefix+'reconstructed'+suffix)
+
+        print('generated images for digit %d' % (n))
 
     gen_displayable_images()

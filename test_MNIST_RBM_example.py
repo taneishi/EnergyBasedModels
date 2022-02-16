@@ -79,8 +79,6 @@ if __name__ == '__main__':
         hidden_image = hidden_image.astype(np.int32)
         gen_image = gen_image.astype(np.int32)
 
-        print(image.shape, hidden_image.shape, gen_image.shape)
-        
         prefix = 'images_RBM/digitwise/'+str(n)+'_'
         suffix = '_image.jpg'
         
@@ -98,5 +96,7 @@ if __name__ == '__main__':
         plt.imshow(gen_image, cmap='gray')
         plt.title('reconstructed image')
         plt.savefig(prefix+'reconstructed'+suffix)
+
+        print('generated images for digit %d' % (n))
 
     gen_displayable_images()

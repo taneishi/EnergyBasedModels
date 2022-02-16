@@ -30,7 +30,6 @@ if __name__ == '__main__':
 
     files = [
             'results/DBN_without_pretraining_classifier.csv',
-            'results/DBN_with_pretraining_and_input_binarization_classifier.csv',
             'results/DBN_with_pretraining_classifier.csv',
             'results/RBM_pretrained_classifier.csv',
             'results/RBM_without_pretraining_classifier.csv']

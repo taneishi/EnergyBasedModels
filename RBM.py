@@ -26,11 +26,11 @@ class RBM:
         self.previous_loss_before_stagnation = 0
         self.progress = []
 
-        if torch.cuda.is_available() and gpu==True:  
-            dev = 'cuda:0' 
+        if torch.cuda.is_available() and gpu == True:  
+            device = 'cuda:0' 
         else:  
-            dev = 'cpu'  
-        self.device = torch.device(dev)
+            device = 'cpu'  
+        self.device = torch.device(device)
 
         # Initialize weights and biases
         std = 4 * np.sqrt(6. / (self.n_visible + self.n_hidden))
@@ -102,7 +102,8 @@ class RBM:
                 counter += 1
             
             self.progress.append(train_loss.item()/counter)
-            print('epoch %3d loss %6.3f' % (epoch+1, train_loss.item() / counter))
+            if epoch % (self.epochs / 10) == 0:
+                print('epoch %3d loss %6.3f' % (epoch+1, train_loss.item() / counter))
             
             if train_loss.item()/counter > self.previous_loss_before_stagnation and epoch>self.early_stopping_patience+1:
                 self.stagnation += 1
