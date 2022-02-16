@@ -6,13 +6,13 @@ else
     python3 -m venv torch
     source torch/bin/activate
     pip install --upgrade pip
-    pip install torch numpy pandas tqdm matplotlib Pillow opencv-python
+    pip install torchvision numpy pandas matplotlib Pillow opencv-python
 fi
 
-python MNIST_RBM_classifier_example.py
-python test_MNIST_RBM_example.py
+python mnist_RBM.py
+python test_mnist_RBM.py
 
-python MNIST_DBN_classifier_example.py
-python test_MNIST_DBN_example.py
+python mnist_DBN.py
+python test_mnist_DBN.py
 
 python draw_graphs.py

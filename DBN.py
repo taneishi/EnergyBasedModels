@@ -60,7 +60,7 @@ class DBN:
             self.layer_parameters[index]['W'] = rbm.W.cpu()
             self.layer_parameters[index]['hb'] = rbm.hb.cpu()
             self.layer_parameters[index]['vb'] = rbm.vb.cpu()
-            print('\nFinished Training Layer:', index, 'to', index+1)
+            print('Finished Training Layer:', index, 'to', index+1)
 
         if self.savefile is not None:
             torch.save(self.layer_parameters, self.savefile)
