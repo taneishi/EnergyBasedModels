@@ -1,12 +1,13 @@
-import torch
-import numpy as np
 import pandas as pd
-from RBM import RBM
-from load_dataset import MNIST
-import cv2
-from PIL import Image
+import numpy as np
 from matplotlib import pyplot as plt
+import torch
+from torchvision import datasets, transforms
+from PIL import Image
+import cv2
 import os
+
+from RBM import RBM
 
 def image_beautifier(names, final_name):
     image_names = sorted(names)
@@ -23,7 +24,7 @@ def image_beautifier(names, final_name):
 
     new_im.save(final_name)
     img = cv2.imread(final_name)
-    img = cv2.resize(img, (img.shape[1]//2, img.shape[0]//2))
+    img = cv2.resize(img, (img.shape[1] // 2, img.shape[0] // 2))
     cv2.imwrite(final_name, img)
 
 def gen_displayable_images():
@@ -37,9 +38,12 @@ def gen_displayable_images():
 if __name__ == '__main__':
     os.makedirs('images_RBM/digitwise', exist_ok=True)
 
-    mnist = MNIST()
-    train_x, train_y, test_x, test_y = mnist.load_dataset()
-    vn = train_x.shape[1]
+    test_dataset = datasets.MNIST('dataset', download=True, train=False, transform=transforms.ToTensor())
+    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=len(test_dataset))
+    for test_x, test_y in test_loader:
+        test_x = test_x.view(-1, 784)
+
+    vn = test_x.shape[1]
     hn = 2500
 
     rbm = RBM(vn, hn)
@@ -50,20 +54,22 @@ if __name__ == '__main__':
         x = x.unsqueeze(0)
         hidden_image = []
         gen_image = []
+
         for k in range(rbm.k):
             _, hk = rbm.sample_h(x)
             _, vk = rbm.sample_v(hk)
             gen_image.append(vk.numpy())
             hidden_image.append(hk.numpy())
+
         hidden_image = np.array(hidden_image)
         hidden_image = np.mean(hidden_image, axis=0)
         gen_image = np.array(gen_image)
         gen_image = np.mean(gen_image, axis=0)
         image = x.numpy()
 
-        image = mnist.inv_transform_normalizer(image)[0]
+        # revert transforms.ToTensor() scaling
+        image = (image*255)[0]
         hidden_image = (hidden_image*255)[0]
-        gen_image = mnist.inv_transform_normalizer(gen_image)[0]
 
         image = np.reshape(image, (28, 28))
         hidden_image = np.reshape(hidden_image, (50, 50))

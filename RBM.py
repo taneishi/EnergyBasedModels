@@ -1,10 +1,10 @@
 import numpy as np
 import torch
 import random
-from tqdm import trange
 
 class RBM:
-    def __init__(self, n_visible, n_hidden, lr=0.001, epochs=5, mode='bernoulli', batch_size=32, k=3, optimizer='adam', gpu=False, savefile=None, early_stopping_patience=5):
+    def __init__(self, n_visible, n_hidden, lr=0.001, epochs=5, mode='bernoulli', batch_size=32, k=3,
+            optimizer='adam', gpu=False, savefile=None, early_stopping_patience=5):
         self.mode = mode # bernoulli or gaussian RBM
         self.n_hidden = n_hidden #  Number of hidden nodes
         self.n_visible = n_visible # Number of visible nodes
@@ -84,8 +84,8 @@ class RBM:
 
     def train(self, dataset):
         dataset = dataset.to(self.device)
-        learning = trange(self.epochs, desc=str('Starting...'))
-        for epoch in learning:
+
+        for epoch in range(self.epochs):
             train_loss = 0
             counter = 0
             for batch_start_index in range(0, dataset.shape[0]-self.batch_size, self.batch_size):
@@ -102,20 +102,17 @@ class RBM:
                 counter += 1
             
             self.progress.append(train_loss.item()/counter)
-            details = {'epoch': epoch+1, 'loss': round(train_loss.item()/counter, 4)}
-            learning.set_description(str(details))
-            learning.refresh()
+            print('epoch %3d loss %6.3f' % (epoch+1, train_loss.item() / counter))
             
             if train_loss.item()/counter > self.previous_loss_before_stagnation and epoch>self.early_stopping_patience+1:
                 self.stagnation += 1
                 if self.stagnation == self.early_stopping_patience-1:
-                    learning.close()
                     print('Not Improving the stopping training loop.')
                     break
             else:
                 self.previous_loss_before_stagnation = train_loss.item()/counter
                 self.stagnation = 0
-        learning.close()
+
         if self.savefile is not None:
             model = {'W':self.W, 'vb':self.vb, 'hb':self.hb}
             torch.save(model, self.savefile)
@@ -158,7 +155,8 @@ def trial_dataset():
 if __name__ == '__main__':
     dataset = trial_dataset()
 
-    rbm = RBM(10, 100, epochs=50, mode='bernoulli', lr=0.001, optimizer='adam', gpu=True, savefile='models/save_example.pt', early_stopping_patience=50)
+    rbm = RBM(10, 100, epochs=50, mode='bernoulli', lr=0.001, 
+            optimizer='adam', gpu=True, savefile='models/save_example.pt', early_stopping_patience=50)
     print('Before Training:', rbm.vb)
     rbm.train(dataset)
     print('After Training:', rbm.vb)
