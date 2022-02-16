@@ -102,9 +102,10 @@ class RBM:
                 counter += 1
             
             self.progress.append(train_loss.item()/counter)
+
             if epoch % (self.epochs / 10) == 0:
                 print('epoch %3d loss %6.3f' % (epoch, train_loss.item() / counter))
-            
+
             if train_loss.item() / counter > self.previous_loss_before_stagnation and epoch > self.early_stopping_patience+1:
                 self.stagnation += 1
                 if self.stagnation == self.early_stopping_patience-1:
