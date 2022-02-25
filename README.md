@@ -48,6 +48,19 @@ epoch 4 train loss 1.482 train acc 0.982
 epoch 5 train loss 1.477 train acc 0.986
 ```
 
+## Images of RBM
+
+<img src="images_RBM/0.jpg" alt="image 0" width="300" />
+<img src="images_RBM/1.jpg" alt="image 1" width="300" />
+<img src="images_RBM/2.jpg" alt="image 2" width="300" />
+<img src="images_RBM/3.jpg" alt="image 3" width="300" />
+<img src="images_RBM/4.jpg" alt="image 4" width="300" />
+<img src="images_RBM/5.jpg" alt="image 5" width="300" />
+<img src="images_RBM/6.jpg" alt="image 6" width="300" />
+<img src="images_RBM/7.jpg" alt="image 7" width="300" />
+<img src="images_RBM/8.jpg" alt="image 8" width="300" />
+<img src="images_RBM/9.jpg" alt="image 9" width="300" />
+
 ## Deep Belief Networks
 
 In machine learning, a Deep Belief Network (DBN) is a generative graphical model, or alternatively a class of deep neural network, composed of multiple layers of latent variables ("hidden units"), with connections between the layers but not between units within each layer.
@@ -125,19 +138,6 @@ epoch 3 train loss 1.493 train acc 0.972
 epoch 4 train loss 1.485 train acc 0.978
 epoch 5 train loss 1.480 train acc 0.983
 ```
-
-## Images of RBM
-
-<img src="images_RBM/0.jpg" alt="image 0" width="300" />
-<img src="images_RBM/1.jpg" alt="image 1" width="300" />
-<img src="images_RBM/2.jpg" alt="image 2" width="300" />
-<img src="images_RBM/3.jpg" alt="image 3" width="300" />
-<img src="images_RBM/4.jpg" alt="image 4" width="300" />
-<img src="images_RBM/5.jpg" alt="image 5" width="300" />
-<img src="images_RBM/6.jpg" alt="image 6" width="300" />
-<img src="images_RBM/7.jpg" alt="image 7" width="300" />
-<img src="images_RBM/8.jpg" alt="image 8" width="300" />
-<img src="images_RBM/9.jpg" alt="image 9" width="300" />
 
 ## Images of DBN
 
