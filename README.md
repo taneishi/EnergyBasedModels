@@ -25,7 +25,7 @@ Finally let us take a look at some of the reconstructed images.
 ![RBM-Acc](./images/RBM_acc.jpg)
 ![RBM-Loss](./images/RBM_loss.jpg)
 
-'''
+```
 Unsupervised pre-training of RBM
 epoch   0 loss  0.068
 epoch   1 loss  0.066
@@ -46,7 +46,7 @@ epoch 2 train loss 1.499 train acc 0.966
 epoch 3 train loss 1.488 train acc 0.977
 epoch 4 train loss 1.482 train acc 0.982
 epoch 5 train loss 1.477 train acc 0.986
-'''
+```
 
 ## Deep Belief Networks
 
@@ -66,7 +66,7 @@ Overall, there are many attractive implementations and uses of DBNs in real-life
 ![DBN-Acc](./images/DBN_acc.jpg)
 ![DBN-Loss](./images/DBN_loss.jpg)
 
-'''
+```
 Unsupervised pre-training of DBN
 epoch   0 loss  0.169
 epoch  10 loss  0.109
@@ -124,7 +124,7 @@ epoch 2 train loss 1.507 train acc 0.960
 epoch 3 train loss 1.493 train acc 0.972
 epoch 4 train loss 1.485 train acc 0.978
 epoch 5 train loss 1.480 train acc 0.983
-'''
+```
 
 ## Images of RBM
 
@@ -151,4 +151,3 @@ epoch 5 train loss 1.480 train acc 0.983
 <img src="images_DBN/7.jpg" alt="image 7" width="300" />
 <img src="images_DBN/8.jpg" alt="image 8" width="300" />
 <img src="images_DBN/9.jpg" alt="image 9" width="300" />
-
