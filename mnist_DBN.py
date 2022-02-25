@@ -90,8 +90,6 @@ if __name__ == '__main__':
     completed_model = torch.nn.Sequential(model, torch.nn.Softmax(dim=1))
     torch.save(completed_model, 'models/mnist_trained_dbn_classifier.pt')
 
-    print(completed_model)
-
     print('Without Pre-Training')
     model = initialize_model()
     model, progress = train(model)

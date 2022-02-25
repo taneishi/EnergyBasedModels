@@ -6,7 +6,7 @@ else
     python3 -m venv torch
     source torch/bin/activate
     pip install --upgrade pip
-    pip install torchvision numpy pandas matplotlib Pillow opencv-python
+    pip install torchvision pandas matplotlib opencv-python
 fi
 
 python mnist_RBM.py
