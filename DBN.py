@@ -4,7 +4,7 @@ import random
 from RBM import RBM
 
 class DBN:
-    def __init__(self, input_size, layers, mode='bernoulli', gpu=False, k=5, savefile=None):
+    def __init__(self, input_size, layers, mode='bernoulli', k=5, savefile=None):
         self.layers = layers
         self.input_size = input_size
         self.layer_parameters = [{'W':None, 'hb':None, 'vb':None} for _ in range(len(layers))]
@@ -15,7 +15,7 @@ class DBN:
     def sample_v(self, y, W, vb):
         wy = torch.mm(y, W)
         activation = wy + vb
-        p_v_given_h =torch.sigmoid(activation)
+        p_v_given_h = torch.sigmoid(activation)
         if self.mode == 'bernoulli':
             return p_v_given_h, torch.bernoulli(p_v_given_h)
         else:
@@ -46,7 +46,7 @@ class DBN:
 
         return x_dash
 
-    def train_DBN(self, x):
+    def train(self, x):
         for index, layer in enumerate(self.layers):
             if index == 0:
                 vn = self.input_size
@@ -54,7 +54,7 @@ class DBN:
                 vn = self.layers[index-1]
             hn = self.layers[index]
 
-            rbm = RBM(vn, hn, epochs=100, mode='bernoulli', lr=0.0005, k=10, batch_size=128, gpu=True, optimizer='adam', early_stopping_patience=10)
+            rbm = RBM(vn, hn, epochs=100, mode='bernoulli', lr=0.0005, k=10, batch_size=128, optimizer='adam', early_stopping_patience=10)
             x_dash = self.generate_input_for_layer(index, x)
             rbm.train(x_dash)
             self.layer_parameters[index]['W'] = rbm.W.cpu()
@@ -66,6 +66,12 @@ class DBN:
             torch.save(self.layer_parameters, self.savefile)
 
     def reconstructor(self, x):
+        '''
+        dbn.train(dataset)
+        y = dbn.reconstructor(dataset)
+        print('MAE of an all 0 reconstructor:', torch.mean(dataset).item())
+        print('MAE between reconstructed and original sample:', torch.mean(torch.abs(y - dataset)).item())
+        '''
         x_gen = []
         for _ in range(self.k):
             x_dash = x.clone()
@@ -89,7 +95,7 @@ class DBN:
 
         return y_dash, x_dash
 
-    def initialize_model(self):
+    def net(self):
         print('The Last layer will not be activated. The rest are activated using the Sigoid Function')
         modules = []
         for index, layer in enumerate(self.layer_parameters):
@@ -99,49 +105,10 @@ class DBN:
         model = torch.nn.Sequential(*modules)
 
         for layer_no, layer in enumerate(model):
-            if layer_no//2 == len(self.layer_parameters)-1:
+            if layer_no // 2 == len(self.layer_parameters)-1:
                 break
-            if layer_no%2 == 0:
-                model[layer_no].weight = torch.nn.Parameter(self.layer_parameters[layer_no//2]['W'])
-                model[layer_no].bias = torch.nn.Parameter(self.layer_parameters[layer_no//2]['hb'])
+            if layer_no % 2 == 0:
+                model[layer_no].weight = torch.nn.Parameter(self.layer_parameters[layer_no // 2]['W'])
+                model[layer_no].bias = torch.nn.Parameter(self.layer_parameters[layer_no // 2]['hb'])
 
         return model
-
-def trial_dataset():
-    dataset = []
-    for _ in range(1000):
-        t = []
-        for _ in range(10):
-            if random.random() > 0.75:
-                t.append(0)
-            else:
-                t.append(1)
-        dataset.append(t)
-
-    for _ in range(1000):
-        t = []
-        for _ in range(10):
-            if random.random() > 0.75:
-                t.append(1)
-            else:
-                t.append(0)
-        dataset.append(t)
-
-    dataset = np.array(dataset, dtype=np.float32)
-    np.random.shuffle(dataset)
-    dataset = torch.from_numpy(dataset)
-    return dataset
-
-if __name__ == '__main__':
-    dataset = trial_dataset()
-
-    layers = [7, 5, 2]
-
-    dbn = DBN(10, layers)
-    dbn.train_DBN(dataset)
-
-    model = dbn.initialize_model()
-
-    y = dbn.reconstructor(dataset)
-    print('MAE of an all 0 reconstructor:', torch.mean(dataset).item())
-    print('MAE between reconstructed and original sample:', torch.mean(torch.abs(y - dataset)).item())

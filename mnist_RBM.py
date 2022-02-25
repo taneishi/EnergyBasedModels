@@ -35,6 +35,7 @@ def train(net, epochs, batch_size):
     for epoch in range(epochs):
         train_loss = 0
         train_acc = 0
+        net.train()
         for train_x, train_y in train_loader:
             train_x = train_x.to(device)
             train_y = train_y.to(device)
@@ -47,7 +48,7 @@ def train(net, epochs, batch_size):
 
             train_loss += loss.item()
             output = torch.argmax(output, dim=1)
-            train_acc += torch.sum(output == train_y).item() / train_y.shape[0]
+            train_acc += torch.sum(output == train_y).item() / batch_size
 
         train_loss /= len(train_loader)
         train_acc /= len(train_loader)
@@ -56,16 +57,18 @@ def train(net, epochs, batch_size):
 
         test_loss = 0
         test_acc = 0
+        net.eval()
         for test_x, test_y in test_loader:
             test_x = test_x.to(device)
             test_y = test_y.to(device)
             test_x = test_x.view(-1, 784)
 
-            output_test = net(test_x)
-            test_loss += criterion(output_test, test_y).item()
+            with torch.no_grad():
+                output_test = net(test_x)
 
+            test_loss += criterion(output_test, test_y).item()
             output_test = torch.argmax(output_test, axis=1)
-            test_acc += torch.sum(output_test == test_y).item() / test_y.shape[0]
+            test_acc += torch.sum(output_test == test_y).item() / batch_size
 
         test_loss /= len(test_loader)
         test_acc /= len(test_loader)
