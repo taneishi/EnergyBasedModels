@@ -1,13 +1,6 @@
 #!/bin/bash
 
-if [ -d torch ]; then
-    source torch/bin/activate
-else
-    python3 -m venv torch
-    source torch/bin/activate
-    pip install --upgrade pip
-    pip install torchvision pandas matplotlib opencv-python
-fi
+pip install -r requirements.txt
 
 python mnist_RBM.py
 python test_mnist_RBM.py
