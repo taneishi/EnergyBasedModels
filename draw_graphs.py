@@ -31,6 +31,7 @@ if __name__ == '__main__':
             'results/RBM_without_pretraining_classifier.csv']
     
     plot(filenames)
+    plt.tight_layout()
     plt.savefig('images/RBM.jpg')
 
     filenames = [
@@ -38,4 +39,5 @@ if __name__ == '__main__':
             'results/DBN_with_pretraining_classifier.csv']
     
     plot(filenames)
+    plt.tight_layout()
     plt.savefig('images/DBN.jpg')

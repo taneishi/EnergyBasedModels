@@ -68,4 +68,5 @@ if __name__ == '__main__':
 
         print('generated images for digit %d' % (n))
 
+    plt.tight_layout()
     plt.savefig('images/RBM_digits.jpg')
