@@ -33,7 +33,7 @@ def gen_displayable_images():
         prefix = 'images_DBN/digitwise/'+str(n)+'_'
         names = ['original', 'hidden', 'reconstructed']
         names = [prefix+name+suffix for name in names]
-        image_beautifier(names, 'images_DBN/'+str(n)+'.jpg')
+        image_beautifier(names, 'images_DBN/%d.jpg' % (n))
 
 if __name__ == '__main__':
     os.makedirs('images_DBN/digitwise', exist_ok=True)
@@ -68,7 +68,7 @@ if __name__ == '__main__':
         hidden_image = hidden_image.astype(np.int32)
         gen_image = gen_image.astype(np.int32)
 
-        prefix = 'images_DBN/digitwise/'+str(n)+'_'
+        prefix = 'images_DBN/digitwise/%d_' % (n)
         suffix = '_image.jpg'
         
         plt.cla()

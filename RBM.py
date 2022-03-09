@@ -3,14 +3,11 @@ import torch
 import random
 
 class RBM:
-    def __init__(self, n_visible, n_hidden, lr=0.001, epochs=5, mode='bernoulli',
-            batch_size=32, k=3, optimizer='adam', savefile=None, early_stopping_patience=5):
+    def __init__(self, n_visible, n_hidden, lr=0.001, mode='bernoulli', k=3, optimizer='adam', savefile=None):
         self.mode = mode # bernoulli or gaussian RBM
         self.n_hidden = n_hidden #  Number of hidden nodes
         self.n_visible = n_visible # Number of visible nodes
         self.lr = lr # Learning rate for the CD algorithm
-        self.epochs = epochs # Number of iterations to run the algorithm for
-        self.batch_size = batch_size
         self.k = k
         self.optimizer = optimizer
         self.beta_1=0.9
@@ -21,7 +18,6 @@ class RBM:
         self.m_batches = {0:[], 1:[], 2:[]}
         self.v_batches = {0:[], 1:[], 2:[]}
         self.savefile = savefile
-        self.early_stopping_patience = early_stopping_patience
         self.stagnation = 0
         self.previous_loss_before_stagnation = 0
         self.progress = []
@@ -40,6 +36,7 @@ class RBM:
         self.hb = self.hb.to(self.device)
         
     def sample_h(self, x):
+        x = x.to(self.device)
         wx = torch.mm(x, self.W.t())
         activation = wx + self.hb
         p_h_given_v = torch.sigmoid(activation)
@@ -79,15 +76,16 @@ class RBM:
         self.vb += self.lr * dvb
         self.hb += self.lr * dhb
 
-    def train(self, dataset):
+    def train(self, dataset, epochs, batch_size, early_stopping_patience):
         dataset = dataset.to(self.device)
 
-        for epoch in range(self.epochs):
+        # Number of iterations to run the algorithm for
+        for epoch in range(epochs):
             train_loss = 0
             counter = 0
-            for batch_start_index in range(0, dataset.shape[0]-self.batch_size, self.batch_size):
-                vk = dataset[batch_start_index:batch_start_index+self.batch_size]
-                v0 = dataset[batch_start_index:batch_start_index+self.batch_size]
+            for batch_start_index in range(0, dataset.shape[0]-batch_size, batch_size):
+                vk = dataset[batch_start_index:batch_start_index+batch_size]
+                v0 = dataset[batch_start_index:batch_start_index+batch_size]
                 ph0, _ = self.sample_h(v0)
 
                 for k in range(self.k):
@@ -100,12 +98,12 @@ class RBM:
             
             self.progress.append(train_loss.item()/counter)
 
-            if epoch % (self.epochs / 10) == 0:
+            if epoch % (epochs / 10) == 0:
                 print('epoch %3d loss %6.3f' % (epoch, train_loss.item() / counter))
 
-            if train_loss.item() / counter > self.previous_loss_before_stagnation and epoch > self.early_stopping_patience+1:
+            if train_loss.item() / counter > self.previous_loss_before_stagnation and epoch > early_stopping_patience+1:
                 self.stagnation += 1
-                if self.stagnation == self.early_stopping_patience-1:
+                if self.stagnation == early_stopping_patience-1:
                     print('Not Improving the stopping training loop.')
                     break
             else:

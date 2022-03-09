@@ -91,7 +91,7 @@ def main(epochs=5, batch_size=64):
     rbm = RBM(vn, hn, savefile='models/mnist_trained_rbm.pt')
 
     print('Unsupervised pre-training of RBM')
-    rbm.train(train_x)
+    rbm.train(train_x, epochs=5, batch_size=32, early_stopping_patience=5)
 
     print('\nTraining without pre-training')
 
@@ -102,7 +102,6 @@ def main(epochs=5, batch_size=64):
     progress = pd.DataFrame(np.array(progress))
     progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
     progress.to_csv('results/RBM_without_pretraining_classifier.csv', index=False)
-    print(progress)
 
     print('\nTraining with pre-training')
 
@@ -116,7 +115,6 @@ def main(epochs=5, batch_size=64):
     progress = pd.DataFrame(np.array(progress))
     progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
     progress.to_csv('results/RBM_pretrained_classifier.csv', index=False)
-    print(progress)
 
 if __name__ == '__main__':
     main()

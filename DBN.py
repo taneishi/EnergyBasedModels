@@ -46,7 +46,7 @@ class DBN:
 
         return x_dash
 
-    def train(self, x):
+    def train(self, x, epochs, batch_size):
         for index, layer in enumerate(self.layers):
             if index == 0:
                 vn = self.input_size
@@ -54,9 +54,9 @@ class DBN:
                 vn = self.layers[index-1]
             hn = self.layers[index]
 
-            rbm = RBM(vn, hn, epochs=100, mode='bernoulli', lr=0.0005, k=10, batch_size=128, optimizer='adam', early_stopping_patience=10)
+            rbm = RBM(vn, hn, mode='bernoulli', lr=0.0005, k=10, optimizer='adam')
             x_dash = self.generate_input_for_layer(index, x)
-            rbm.train(x_dash)
+            rbm.train(x_dash, epochs=epochs, batch_size=batch_size, early_stopping_patience=10)
             self.layer_parameters[index]['W'] = rbm.W.cpu()
             self.layer_parameters[index]['hb'] = rbm.hb.cpu()
             self.layer_parameters[index]['vb'] = rbm.vb.cpu()

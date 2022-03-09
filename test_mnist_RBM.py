@@ -30,10 +30,10 @@ def image_beautifier(names, final_name):
 def gen_displayable_images():
     suffix = '_image.jpg'
     for n in range(10):
-        prefix = 'images_RBM/digitwise/'+str(n)+'_'
+        prefix = 'images_RBM/digitwise/%d_' % (n)
         names = ['original', 'hidden', 'reconstructed']
         names = [prefix+name+suffix for name in names]
-        image_beautifier(names, 'images_RBM/'+str(n)+'.jpg')
+        image_beautifier(names, 'images_RBM/%d.jpg' % (n))
 
 if __name__ == '__main__':
     os.makedirs('images_RBM/digitwise', exist_ok=True)
@@ -58,8 +58,8 @@ if __name__ == '__main__':
         for k in range(rbm.k):
             _, hk = rbm.sample_h(x)
             _, vk = rbm.sample_v(hk)
-            gen_image.append(vk.numpy())
-            hidden_image.append(hk.numpy())
+            gen_image.append(vk.cpu().numpy())
+            hidden_image.append(hk.cpu().numpy())
 
         hidden_image = np.array(hidden_image)
         hidden_image = np.mean(hidden_image, axis=0)
@@ -80,7 +80,7 @@ if __name__ == '__main__':
         hidden_image = hidden_image.astype(np.int32)
         gen_image = gen_image.astype(np.int32)
 
-        prefix = 'images_RBM/digitwise/'+str(n)+'_'
+        prefix = 'images_RBM/digitwise/%d_' % (n)
         suffix = '_image.jpg'
         
         plt.cla()

@@ -95,7 +95,7 @@ if __name__ == '__main__':
     dbn = DBN(train_x.shape[1], layers, savefile='models/mnist_trained_dbn.pt')
 
     print('Unsupervised pre-training of DBN')
-    dbn.train(train_x)
+    dbn.train(train_x, epochs=100, batch_size=128)
 
     print('Without Pre-Training')
     net = Net()
