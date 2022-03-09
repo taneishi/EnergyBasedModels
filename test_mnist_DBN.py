@@ -3,37 +3,9 @@ import numpy as np
 from matplotlib import pyplot as plt
 import torch
 from torchvision import datasets, transforms
-from PIL import Image
-import cv2
 import os
 
 from DBN import DBN
-
-def image_beautifier(names, final_name):
-    image_names = sorted(names)
-    images = [Image.open(x) for x in names]
-    widths, heights = zip(*(i.size for i in images))
-    total_width = sum(widths)
-    max_height = max(heights)
-    new_im = Image.new('RGB', (total_width, max_height))
-
-    x_offset = 0
-    for im in images:
-        new_im.paste(im, (x_offset,0))
-        x_offset += im.size[0]
-
-    new_im.save(final_name)
-    img = cv2.imread(final_name)
-    img = cv2.resize(img, (img.shape[1]//2, img.shape[0]//2))
-    cv2.imwrite(final_name, img)
-
-def gen_displayable_images():
-    suffix = '_image.jpg'
-    for n in range(10):
-        prefix = 'images_DBN/digitwise/'+str(n)+'_'
-        names = ['original', 'hidden', 'reconstructed']
-        names = [prefix+name+suffix for name in names]
-        image_beautifier(names, 'images_DBN/%d.jpg' % (n))
 
 if __name__ == '__main__':
     os.makedirs('images_DBN/digitwise', exist_ok=True)
@@ -47,6 +19,8 @@ if __name__ == '__main__':
     dbn = DBN(test_x.shape[1], layers)
     dbn.layer_parameters = torch.load('models/mnist_trained_dbn.pt')
     
+    plt.figure(figsize=(12, 60))
+
     for n in range(10):
         x = test_x[np.where(test_y==n)[0][0]]
         x = x.unsqueeze(0)
@@ -71,21 +45,21 @@ if __name__ == '__main__':
         prefix = 'images_DBN/digitwise/%d_' % (n)
         suffix = '_image.jpg'
         
-        plt.cla()
+        plt.subplot(10, 3, 1 + n*3)
         plt.imshow(image, cmap='gray')
         plt.title('original image')
         plt.savefig(prefix+'original'+suffix)
 
-        plt.cla()
+        plt.subplot(10, 3, 2 + n*3)
         plt.imshow(hidden_image, cmap='gray')
         plt.title('hidden image')
         plt.savefig(prefix+'hidden'+suffix)
 
-        plt.cla()
+        plt.subplot(10, 3, 3 + n*3)
         plt.imshow(gen_image, cmap='gray')
         plt.title('reconstructed image')
         plt.savefig(prefix+'reconstructed'+suffix)
 
         print('generated images for digit %d' % (n))
 
-    gen_displayable_images()
+    plt.savefig('images/DBN_digits.jpg')
