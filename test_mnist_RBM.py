@@ -8,8 +8,6 @@ import os
 from RBM import RBM
 
 if __name__ == '__main__':
-    os.makedirs('images_RBM/digitwise', exist_ok=True)
-
     test_dataset = datasets.MNIST('dataset', download=True, train=False, transform=transforms.ToTensor())
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=len(test_dataset))
     for test_x, test_y in test_loader:
