@@ -25,26 +25,22 @@ Finally let us take a look at some of the reconstructed images.
 ![RBM-metrics](images/RBM.jpg)
 
 ```
-Unsupervised pre-training of RBM
-epoch   0 loss  0.068
-epoch   1 loss  0.066
-epoch   2 loss  0.068
-epoch   3 loss  0.069
-epoch   4 loss  0.069
+Unsupervised pretraining of Restricted Boltzmann Machine
+epoch   5/  5 train loss  0.068 12.8sec
 
-Training without pre-training
-epoch 1 train loss 1.948 train acc 0.512
-epoch 2 train loss 1.582 train acc 0.884
-epoch 3 train loss 1.516 train acc 0.949
-epoch 4 train loss 1.503 train acc 0.961
-epoch 5 train loss 1.495 train acc 0.968
+Training without pretraining
+epoch  1/ 5 train loss 1.684 train acc 0.789  6.3sec
+epoch  2/ 5 train loss 1.584 train acc 0.880  6.4sec
+epoch  3/ 5 train loss 1.517 train acc 0.947  6.4sec
+epoch  4/ 5 train loss 1.506 train acc 0.957  6.4sec
+epoch  5/ 5 train loss 1.498 train acc 0.965  6.3sec
 
-Training with pre-training
-epoch 1 train loss 1.563 train acc 0.917
-epoch 2 train loss 1.499 train acc 0.966
-epoch 3 train loss 1.488 train acc 0.977
-epoch 4 train loss 1.482 train acc 0.982
-epoch 5 train loss 1.477 train acc 0.986
+Training with pretraining
+epoch  1/ 5 train loss 1.560 train acc 0.918  6.4sec
+epoch  2/ 5 train loss 1.500 train acc 0.965  6.4sec
+epoch  3/ 5 train loss 1.488 train acc 0.976  6.4sec
+epoch  4/ 5 train loss 1.481 train acc 0.982  6.4sec
+epoch  5/ 5 train loss 1.477 train acc 0.986  6.4sec
 ```
 
 ## Images of RBM
@@ -69,63 +65,30 @@ Overall, there are many attractive implementations and uses of DBNs in real-life
 ![DBN-metics](images/DBN.jpg)
 
 ```
-Unsupervised pre-training of DBN
-epoch   0 loss  0.169
-epoch  10 loss  0.109
-epoch  20 loss  0.101
-epoch  30 loss  0.096
-epoch  40 loss  0.093
-epoch  50 loss  0.091
-epoch  60 loss  0.089
-epoch  70 loss  0.088
-epoch  80 loss  0.087
-epoch  90 loss  0.086
+Unsupervised pretraining of Deep Belief Network
+epoch 100/100 train loss  0.085  1.9sec
 Finished Training Layer: 0 to 1
-epoch   0 loss  0.302
-epoch  10 loss  0.206
-epoch  20 loss  0.193
-epoch  30 loss  0.185
-epoch  40 loss  0.180
-epoch  50 loss  0.176
-epoch  60 loss  0.172
-epoch  70 loss  0.170
-epoch  80 loss  0.168
-epoch  90 loss  0.166
+epoch 100/100 train loss  0.165  0.5sec
 Finished Training Layer: 1 to 2
-epoch   0 loss  0.358
-epoch  10 loss  0.249
-epoch  20 loss  0.227
-epoch  30 loss  0.213
-epoch  40 loss  0.205
-epoch  50 loss  0.200
-epoch  60 loss  0.195
-epoch  70 loss  0.192
-epoch  80 loss  0.189
-epoch  90 loss  0.187
+epoch 100/100 train loss  0.187  0.4sec
 Finished Training Layer: 2 to 3
-epoch   0 loss  0.406
-epoch  10 loss  0.277
-epoch  20 loss  0.263
-epoch  30 loss  0.260
-epoch  40 loss  0.256
-epoch  50 loss  0.252
-epoch  60 loss  0.250
-epoch  70 loss  0.244
-epoch  80 loss  0.239
-epoch  90 loss  0.234
+epoch 100/100 train loss  0.244  0.4sec
 Finished Training Layer: 3 to 4
-Without Pre-Training
-epoch 1 train loss 1.837 train acc 0.649
-epoch 2 train loss 1.583 train acc 0.887
-epoch 3 train loss 1.521 train acc 0.944
-epoch 4 train loss 1.508 train acc 0.956
-epoch 5 train loss 1.500 train acc 0.962
-With Pre-Training
-epoch 1 train loss 1.683 train acc 0.844
-epoch 2 train loss 1.507 train acc 0.960
-epoch 3 train loss 1.493 train acc 0.972
-epoch 4 train loss 1.485 train acc 0.978
-epoch 5 train loss 1.480 train acc 0.983
+
+Training without pretraining
+epoch  1/ 5 train loss 1.813 train acc 0.667  4.579sec
+epoch  2/ 5 train loss 1.563 train acc 0.905  4.735sec
+epoch  3/ 5 train loss 1.516 train acc 0.949  4.724sec
+epoch  4/ 5 train loss 1.504 train acc 0.958  4.741sec
+epoch  5/ 5 train loss 1.497 train acc 0.965  4.755sec
+
+Training with pretraining
+The Last layer will not be activated. The rest are activated using the Sigmoid Function
+epoch  1/ 5 train loss 1.702 train acc 0.820  4.721sec
+epoch  2/ 5 train loss 1.507 train acc 0.960  4.714sec
+epoch  3/ 5 train loss 1.493 train acc 0.971  4.727sec
+epoch  4/ 5 train loss 1.485 train acc 0.978  4.698sec
+epoch  5/ 5 train loss 1.480 train acc 0.983  4.733sec
 ```
 
 ## Images of DBN

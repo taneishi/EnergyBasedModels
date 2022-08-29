@@ -1,9 +1,9 @@
 import numpy as np
 import torch
-import random
+import timeit
 
 class RBM:
-    def __init__(self, n_visible, n_hidden, lr=0.001, mode='bernoulli', k=3, optimizer='adam', savefile=None):
+    def __init__(self, device, n_visible, n_hidden, lr=0.001, mode='bernoulli', k=3, optimizer='adam', savefile=None):
         self.mode = mode # bernoulli or gaussian RBM
         self.n_hidden = n_hidden #  Number of hidden nodes
         self.n_visible = n_visible # Number of visible nodes
@@ -22,8 +22,7 @@ class RBM:
         self.previous_loss_before_stagnation = 0
         self.progress = []
 
-        device = 'cuda' if torch.cuda.is_available() else 'cpu'  
-        self.device = torch.device(device)
+        self.device = device
 
         # Initialize weights and biases
         std = 4 * np.sqrt(6. / (self.n_visible + self.n_hidden))
@@ -80,7 +79,8 @@ class RBM:
         dataset = dataset.to(self.device)
 
         # Number of iterations to run the algorithm for
-        for epoch in range(epochs):
+        for epoch in range(1, epochs+1):
+            start_time = timeit.default_timer()
             train_loss = 0
             counter = 0
             for batch_start_index in range(0, dataset.shape[0]-batch_size, batch_size):
@@ -98,18 +98,19 @@ class RBM:
             
             self.progress.append(train_loss.item()/counter)
 
-            if epoch % (epochs / 10) == 0:
-                print('epoch %3d loss %6.3f' % (epoch, train_loss.item() / counter))
+            print('\repoch %3d/%3d train loss %6.3f' % (epoch, epochs, train_loss.item() / counter), end='')
+            print(' %4.1fsec' % (timeit.default_timer() - start_time), end='')
 
             if train_loss.item() / counter > self.previous_loss_before_stagnation and epoch > early_stopping_patience+1:
                 self.stagnation += 1
                 if self.stagnation == early_stopping_patience-1:
-                    print('Not Improving the stopping training loop.')
+                    print('\nNot Improving the stopping training loop.')
                     break
             else:
                 self.previous_loss_before_stagnation = train_loss.item() / counter
                 self.stagnation = 0
 
+        print('')
         if self.savefile is not None:
             model = {'W':self.W, 'vb':self.vb, 'hb':self.hb}
             torch.save(model, self.savefile)

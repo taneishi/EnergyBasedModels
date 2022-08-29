@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pip install -r requirements.txt
+pip install -qr requirements.txt
 
 python mnist_RBM.py
 python test_mnist_RBM.py

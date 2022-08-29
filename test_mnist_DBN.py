@@ -8,6 +8,9 @@ import os
 from DBN import DBN
 
 if __name__ == '__main__':
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    device = torch.device(device)
+
     test_dataset = datasets.MNIST('dataset', download=True, train=False, transform=transforms.ToTensor())
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=len(test_dataset))
     for test_x, test_y in test_loader:
@@ -16,7 +19,7 @@ if __name__ == '__main__':
     os.makedirs('images_DBN/digitwise', exist_ok=True)
 
     layers = [512, 128, 64, 10]
-    dbn = DBN(test_x.shape[1], layers)
+    dbn = DBN(device, test_x.shape[1], layers)
     dbn.layer_parameters = torch.load('models/mnist_trained_dbn.pt')
     
     plt.figure(figsize=(12, 60))

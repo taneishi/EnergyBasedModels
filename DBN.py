@@ -4,7 +4,8 @@ import random
 from RBM import RBM
 
 class DBN:
-    def __init__(self, input_size, layers, mode='bernoulli', k=5, savefile=None):
+    def __init__(self, device, input_size, layers, mode='bernoulli', k=5, savefile=None):
+        self.device = device
         self.layers = layers
         self.input_size = input_size
         self.layer_parameters = [{'W':None, 'hb':None, 'vb':None} for _ in range(len(layers))]
@@ -54,7 +55,7 @@ class DBN:
                 vn = self.layers[index-1]
             hn = self.layers[index]
 
-            rbm = RBM(vn, hn, mode='bernoulli', lr=0.0005, k=10, optimizer='adam')
+            rbm = RBM(self.device, vn, hn, mode='bernoulli', lr=0.0005, k=10, optimizer='adam')
             x_dash = self.generate_input_for_layer(index, x)
             rbm.train(x_dash, epochs=epochs, batch_size=batch_size, early_stopping_patience=10)
             self.layer_parameters[index]['W'] = rbm.W.cpu()
@@ -96,7 +97,7 @@ class DBN:
         return y_dash, x_dash
 
     def net(self):
-        print('The Last layer will not be activated. The rest are activated using the Sigoid Function')
+        print('The Last layer will not be activated. The rest are activated using the Sigmoid Function')
         modules = []
         for index, layer in enumerate(self.layer_parameters):
             modules.append(torch.nn.Linear(layer['W'].shape[1], layer['W'].shape[0]))

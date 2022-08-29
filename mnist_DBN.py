@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import torch
 from torchvision import datasets, transforms
+import timeit
 import os
 
 from DBN import DBN
@@ -20,10 +21,7 @@ def Net():
 
     return net
 
-def train(net, epochs=5, batch_size=64):
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'  
-    device = torch.device(device)
-
+def train(device, net, epochs=5, batch_size=64):
     net = net.to(device)
 
     train_dataset = datasets.MNIST('dataset', download=True, train=True, transform=transforms.ToTensor())
@@ -36,7 +34,8 @@ def train(net, epochs=5, batch_size=64):
     optimizer = torch.optim.Adam(net.parameters(), lr=0.001)
     progress = []
 
-    for epoch in range(epochs):
+    for epoch in range(1, epochs+1):
+        start_time = timeit.default_timer()
         train_loss = 0
         train_acc = 0
         net.train()
@@ -57,7 +56,8 @@ def train(net, epochs=5, batch_size=64):
 
         train_loss /= len(train_loader)
         train_acc /= len(train_loader)
-        print('epoch %d train loss %5.3f train acc %5.3f' % (epoch+1, train_loss, train_acc))
+        print('epoch %2d/%2d train loss %5.3f train acc %5.3f' % (epoch, epochs, train_loss, train_acc), end='')
+        print(' %6.3fsec' % (timeit.default_timer() - start_time))
 
         test_loss = 0
         test_acc = 0
@@ -85,6 +85,9 @@ def train(net, epochs=5, batch_size=64):
 if __name__ == '__main__':
     os.makedirs('results', exist_ok=True)
 
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    device = torch.device(device)
+
     train_dataset = datasets.MNIST('dataset', download=True, train=True, transform=transforms.ToTensor())
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=len(train_dataset), shuffle=False)
     for train_x, train_y in train_loader:
@@ -92,22 +95,22 @@ if __name__ == '__main__':
 
     layers = [512, 128, 64, 10]
 
-    dbn = DBN(train_x.shape[1], layers, savefile='models/mnist_trained_dbn.pt')
+    dbn = DBN(device, train_x.shape[1], layers, savefile='models/mnist_trained_dbn.pt')
 
-    print('Unsupervised pre-training of DBN')
+    print('Unsupervised pretraining of Deep Belief Network')
     dbn.train(train_x, epochs=100, batch_size=128)
 
-    print('Without Pre-Training')
+    print('\nTraining without pretraining')
     net = Net()
 
-    progress = train(net)
+    progress = train(device, net)
     progress = pd.DataFrame(np.array(progress))
     progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
-    progress.to_csv('results/DBN_without_pretraining_classifier.csv', index=False)
+    progress.to_csv('results/DBN_withoutepretraining_classifier.csv', index=False)
 
-    print('With Pre-Training')
+    print('\nTraining with pretraining')
     dbn_net = torch.nn.Sequential(dbn.net(), torch.nn.Softmax(dim=1))
-    progress = train(dbn_net)
+    progress = train(device, dbn_net)
     progress = pd.DataFrame(np.array(progress))
     progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
     progress.to_csv('results/DBN_with_pretraining_classifier.csv', index=False)

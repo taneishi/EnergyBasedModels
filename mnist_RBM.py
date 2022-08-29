@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import torch
 from torchvision import datasets, transforms
+import timeit
 import os
 
 from RBM import RBM
@@ -16,10 +17,7 @@ def Net():
 
     return net
 
-def train(net, epochs, batch_size):
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'  
-    device = torch.device(device)
-
+def train(device, net, epochs, batch_size):
     net = net.to(device)
 
     train_dataset = datasets.MNIST('dataset', download=True, train=True, transform=transforms.ToTensor())
@@ -32,7 +30,8 @@ def train(net, epochs, batch_size):
     optimizer = torch.optim.Adam(net.parameters(), lr=0.001)
     progress = []
 
-    for epoch in range(epochs):
+    for epoch in range(1, epochs+1):
+        start_time = timeit.default_timer()
         train_loss = 0
         train_acc = 0
         net.train()
@@ -53,7 +52,8 @@ def train(net, epochs, batch_size):
         train_loss /= len(train_loader)
         train_acc /= len(train_loader)
 
-        print('epoch %d train loss %5.3f train acc %5.3f' % (epoch+1, train_loss, train_acc))
+        print('epoch %2d/%2d train loss %5.3f train acc %5.3f' % (epoch, epochs, train_loss, train_acc), end='')
+        print(' %4.1fsec' % (timeit.default_timer() - start_time))
 
         test_loss = 0
         test_acc = 0
@@ -80,6 +80,9 @@ def train(net, epochs, batch_size):
 def main(epochs=5, batch_size=64):
     os.makedirs('results', exist_ok=True)
 
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    device = torch.device(device)
+
     train_dataset = datasets.MNIST('dataset', download=True, train=True, transform=transforms.ToTensor())
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=len(train_dataset), shuffle=False)
 
@@ -88,29 +91,29 @@ def main(epochs=5, batch_size=64):
 
     vn = train_x.shape[1]
     hn = 2500
-    rbm = RBM(vn, hn, savefile='models/mnist_trained_rbm.pt')
+    rbm = RBM(device, vn, hn, savefile='models/mnist_trained_rbm.pt')
 
-    print('Unsupervised pre-training of RBM')
+    print('Unsupervised pretraining of Restricted Boltzmann Machine')
     rbm.train(train_x, epochs=5, batch_size=32, early_stopping_patience=5)
 
-    print('\nTraining without pre-training')
+    print('\nTraining without pretraining')
 
     net = Net()
 
-    progress = train(net, epochs, batch_size)
+    progress = train(device, net, epochs, batch_size)
 
     progress = pd.DataFrame(np.array(progress))
     progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
     progress.to_csv('results/RBM_without_pretraining_classifier.csv', index=False)
 
-    print('\nTraining with pre-training')
+    print('\nTraining with pretraining')
 
     net = Net()
 
     net[0].weight = torch.nn.Parameter(rbm.W)
     net[0].bias = torch.nn.Parameter(rbm.hb)
 
-    progress = train(net, epochs, batch_size)
+    progress = train(device, net, epochs, batch_size)
 
     progress = pd.DataFrame(np.array(progress))
     progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
