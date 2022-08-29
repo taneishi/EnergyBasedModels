@@ -13,6 +13,8 @@ if __name__ == '__main__':
     for test_x, test_y in test_loader:
         test_x = test_x.view(-1, 784)
 
+    os.makedirs('images_DBN/digitwise', exist_ok=True)
+
     layers = [512, 128, 64, 10]
     dbn = DBN(test_x.shape[1], layers)
     dbn.layer_parameters = torch.load('models/mnist_trained_dbn.pt')
