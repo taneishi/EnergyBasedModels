@@ -13,9 +13,12 @@ def plot(filenames):
 
             plt.subplot(2, 2, index)
             for col in cols:
-                plt.plot(np.array(range(1, df.shape[0]+1)), df[col], label=col)
-            plt.legend()
-            plt.title('%s_%s' % (filename[8:-4], metrics))
+                plt.plot(range(1, df.shape[0]+1), df[col], label=col)
+            plt.legend(fontsize=12)
+            plt.xticks(range(1, df.shape[0]+1))
+            plt.xlabel('epochs', fontsize=14)
+            plt.ylabel(metrics, fontsize=14)
+            plt.title('%s_%s' % (filename[8:-4], metrics), fontsize=16)
             plt.grid(True)
 
             if metrics == 'acc':

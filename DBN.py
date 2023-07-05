@@ -61,7 +61,7 @@ class DBN:
             self.layer_parameters[index]['W'] = rbm.W.cpu()
             self.layer_parameters[index]['hb'] = rbm.hb.cpu()
             self.layer_parameters[index]['vb'] = rbm.vb.cpu()
-            print('Finished Training Layer:', index, 'to', index+1)
+            print('Finished Training Layer: %d to %d' % (index, index+1))
 
         if self.savefile is not None:
             torch.save(self.layer_parameters, self.savefile)
@@ -97,7 +97,7 @@ class DBN:
         return y_dash, x_dash
 
     def net(self):
-        print('The Last layer will not be activated. The rest are activated using the Sigmoid Function')
+        print('Layers are activated using the Sigmoid Function except for the last layer.')
         modules = []
         for index, layer in enumerate(self.layer_parameters):
             modules.append(torch.nn.Linear(layer['W'].shape[1], layer['W'].shape[0]))
