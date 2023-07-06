@@ -22,7 +22,7 @@ Finally let us take a look at some of the reconstructed images.
 
 ## Results of RBM
 
-<img src="images/RBM.jpg" alt="RBM loss and acc" width="400px" />
+<img src="images/RBM.jpg" alt="RBM loss and acc" width="500px" />
 
 ```
 Unsupervised pretraining of Restricted Boltzmann Machine
@@ -45,7 +45,7 @@ epoch  5/ 5 train loss 1.477 train acc 0.986  6.4sec
 
 ## Images of RBM
 
-<img src="images/RBM_digits.jpg" alt="RBM digits" width="400px" />
+<img src="images/RBM_digits.jpg" alt="RBM digits" width="500px" />
 
 ## Deep Belief Networks
 
@@ -62,7 +62,7 @@ Overall, there are many attractive implementations and uses of DBNs in real-life
 
 ### Results of DBN
 
-<img src="images/DBN.jpg" alt="DBN loss and acc" width="400px" />
+<img src="images/DBN.jpg" alt="DBN loss and acc" width="500px" />
 
 ```
 Unsupervised pretraining of Deep Belief Network
@@ -93,4 +93,4 @@ epoch  5/ 5 train loss 1.480 train acc 0.983  4.733sec
 
 ## Images of DBN
 
-<img src="images/DBN_digits.jpg" alt="DBN digits" width="400px" />
+<img src="images/DBN_digits.jpg" alt="DBN digits" width="500px" />
