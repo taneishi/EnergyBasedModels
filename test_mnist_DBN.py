@@ -22,7 +22,7 @@ if __name__ == '__main__':
     dbn = DBN(device, test_x.shape[1], layers)
     dbn.layer_parameters = torch.load('models/mnist_trained_dbn.pt')
     
-    plt.figure(figsize=(12, 60))
+    plt.figure(figsize=(24, 30))
 
     for n in range(10):
         x = test_x[np.where(test_y==n)[0][0]]
@@ -48,17 +48,17 @@ if __name__ == '__main__':
         prefix = 'images_DBN/digitwise/%d_' % (n)
         suffix = '_image.jpg'
         
-        plt.subplot(10, 3, 1 + n*3)
+        plt.subplot(5, 6, 1 + n*3)
         plt.imshow(image, cmap='gray')
         plt.title('original image')
         plt.savefig(prefix+'original'+suffix)
 
-        plt.subplot(10, 3, 2 + n*3)
+        plt.subplot(5, 6, 2 + n*3)
         plt.imshow(hidden_image, cmap='gray')
         plt.title('hidden image')
         plt.savefig(prefix+'hidden'+suffix)
 
-        plt.subplot(10, 3, 3 + n*3)
+        plt.subplot(5, 6, 3 + n*3)
         plt.imshow(gen_image, cmap='gray')
         plt.title('reconstructed image')
         plt.savefig(prefix+'reconstructed'+suffix)

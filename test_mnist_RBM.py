@@ -22,7 +22,7 @@ if __name__ == '__main__':
     rbm = RBM(device, vn, hn)
     rbm.load_rbm('models/mnist_trained_rbm.pt')
 
-    plt.figure(figsize=(12, 60))
+    plt.figure(figsize=(24, 30))
     
     for n in range(10):
         x = test_x[np.where(test_y==n)[0][0]]
@@ -55,15 +55,15 @@ if __name__ == '__main__':
         hidden_image = hidden_image.astype(np.int32)
         gen_image = gen_image.astype(np.int32)
 
-        plt.subplot(10, 3, 1 + n*3)
+        plt.subplot(5, 6, 1 + n*3)
         plt.imshow(image, cmap='gray')
         plt.title('original image')
 
-        plt.subplot(10, 3, 2 + n*3)
+        plt.subplot(5, 6, 2 + n*3)
         plt.imshow(hidden_image, cmap='gray')
         plt.title('hidden image')
 
-        plt.subplot(10, 3, 3 + n*3)
+        plt.subplot(5, 6, 3 + n*3)
         plt.imshow(gen_image, cmap='gray')
         plt.title('reconstructed image')
 

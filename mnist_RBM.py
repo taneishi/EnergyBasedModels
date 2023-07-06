@@ -117,7 +117,7 @@ def main(epochs=5, batch_size=64):
 
     progress = pd.DataFrame(np.array(progress))
     progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
-    progress.to_csv('results/RBM_pretrained_classifier.csv', index=False)
+    progress.to_csv('results/RBM_with_pretraining_classifier.csv', index=False)
 
 if __name__ == '__main__':
     main()

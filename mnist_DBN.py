@@ -106,7 +106,7 @@ if __name__ == '__main__':
     progress = train(device, net)
     progress = pd.DataFrame(np.array(progress))
     progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
-    progress.to_csv('results/DBN_withoutepretraining_classifier.csv', index=False)
+    progress.to_csv('results/DBN_without_pretraining_classifier.csv', index=False)
 
     print('\nTraining with pretraining')
     dbn_net = torch.nn.Sequential(dbn.net(), torch.nn.Softmax(dim=1))

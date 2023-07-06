@@ -30,8 +30,8 @@ if __name__ == '__main__':
     os.makedirs('images', exist_ok=True)
 
     filenames = [
-            'results/RBM_pretrained_classifier.csv',
-            'results/RBM_without_pretraining_classifier.csv']
+            'results/RBM_without_pretraining_classifier.csv',
+            'results/RBM_with_pretraining_classifier.csv']
     
     plot(filenames)
     plt.tight_layout()

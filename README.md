@@ -45,7 +45,7 @@ epoch  5/ 5 train loss 1.477 train acc 0.986  6.4sec
 
 ## Images of RBM
 
-<img src="images/RBM_digits.jpg" alt="image 0" width="300" />
+<img src="images/RBM_digits.jpg" alt="RBM digits" width="300" />
 
 ## Deep Belief Networks
 
@@ -93,4 +93,4 @@ epoch  5/ 5 train loss 1.480 train acc 0.983  4.733sec
 
 ## Images of DBN
 
-<img src="images/DBN_digits.jpg" alt="image 0" width="300" />
+<img src="images/DBN_digits.jpg" alt="DBN digits" width="300" />
