@@ -70,7 +70,7 @@ At this point, each RBM can be thought of as performing feature detection in eac
 After unsupervised learning in each RBM, the entire DBN can be fine-tuned for supervised classification.
 
 To add a historical note, there were known problems such as exploding gradient and vanishing gradient when learning deep neural networks,
-bute DBN could learn even with deep layers by pre-training in each RBM.
+but DBN could learn even with deep layers by pre-training in each RBM.
 This is one of the reasons why DBN was used in early deep learning.
 
 As with RBM, the learning process and reconstruction results are shown below.
@@ -112,11 +112,11 @@ epoch  5/ 5 train loss 1.480 train acc 0.983  4.733sec
 
 ## Applications
 
-I applied DBN to a virtual screening task for drug discovery.
+I applied DBN to a virtual screening task for drug discovery in 2014.
 Virtual screening based on the Quantitative Structure-Activity Relationship (QSAR) is suitable for early deep learning because it deals with scalar vectors that represent drug candidate compounds as input.
 
 ## References
 
-Hinton et al., *A fast learning algorithm for deep belief nets*, Neural Computation, 2006.
-Theano Development Team, *Deep Learning Tutorials*, https://deeplearningtutorials.readthedocs.io/, 2008-2013.
+- Hinton et al., *A fast learning algorithm for deep belief nets*, Neural Computation, 2006.
+- Theano Development Team, *Deep Learning Tutorials*, https://deeplearningtutorials.readthedocs.io/, 2008-2013.
 
