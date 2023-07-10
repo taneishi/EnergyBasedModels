@@ -112,11 +112,11 @@ epoch  5/ 5 train loss 1.480 train acc 0.983  4.733sec
 
 ## Applications
 
-I applied DBN to a virtual screening task for drug discovery in 2014.
+As an example of my work, I applied DBN to a virtual screening task for drug discovery in 2014, and the paper was published in 2016.
 Virtual screening based on the Quantitative Structure-Activity Relationship (QSAR) is suitable for early deep learning because it deals with scalar vectors that represent drug candidate compounds as input.
 
 ## References
 
 - Hinton et al., *A fast learning algorithm for deep belief nets*, Neural Computation, 2006.
-- Theano Development Team, *Deep Learning Tutorials*, https://deeplearningtutorials.readthedocs.io/, 2008-2013.
+- Theano Development Team, [*Deep Learning Tutorials*](https://deeplearningtutorials.readthedocs.io/), 2008-2013.
 
