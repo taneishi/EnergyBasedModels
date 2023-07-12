@@ -112,7 +112,7 @@ epoch  5/ 5 train loss 1.480 train acc 0.983  4.733sec
 
 ## Applications
 
-As an example of my work, I applied DBN to a virtual screening task for drug discovery in 2014, and the paper was published in 2016.
+As an example of my work, I applied DBN to a virtual screening task for drug discovery in 2014, and the paper describing the results was published in 2016.
 Virtual screening based on the Quantitative Structure-Activity Relationship (QSAR) is suitable for early deep learning because it deals with scalar vectors that represent drug candidate compounds as input.
 
 ## References
