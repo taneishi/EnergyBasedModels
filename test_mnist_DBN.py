@@ -22,7 +22,7 @@ if __name__ == '__main__':
     dbn = DBN(device, test_x.shape[1], layers)
     dbn.layer_parameters = torch.load('models/mnist_trained_dbn.pt')
     
-    plt.figure(figsize=(24, 30))
+    plt.figure(figsize=(25, 30))
 
     for n in range(10):
         x = test_x[np.where(test_y==n)[0][0]]
@@ -66,4 +66,4 @@ if __name__ == '__main__':
         print('generated images for digit %d' % (n))
 
     plt.tight_layout()
-    plt.savefig('images/DBN_digits.jpg')
+    plt.savefig('images/DBN_digits.jpg', dpi=20)
