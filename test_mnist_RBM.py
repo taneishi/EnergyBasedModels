@@ -22,7 +22,7 @@ if __name__ == '__main__':
     rbm = RBM(device, vn, hn)
     rbm.load_rbm('models/mnist_trained_rbm.pt')
 
-    plt.figure(figsize=(24, 30))
+    plt.figure(figsize=(25, 30))
     
     for n in range(10):
         x = test_x[np.where(test_y==n)[0][0]]
@@ -70,4 +70,4 @@ if __name__ == '__main__':
         print('generated images for digit %d' % (n))
 
     plt.tight_layout()
-    plt.savefig('images/RBM_digits.jpg')
+    plt.savefig('images/RBM_digits.jpg', dpi=20)
