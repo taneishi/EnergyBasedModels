@@ -33,7 +33,7 @@ Therefore, it is necessary to align the same number of units in the hidden layer
 This supervised learning after pretraining is called *fine-tuning*.
 We compare and verify the accuracy achieved as a result of each learning process.
 
-The actual progresses of the accuracies are shown in Table 1. 
+The actual progresses of the accuracies are shown in Figure 1. 
 It can be seen that higher accuracies are achieved with pretraining.
 
 ![Difference in accuracies of MLP with and without pretraining by RBM](figure/RBM.jpg)
@@ -64,7 +64,7 @@ Again, higher accuracy is achieved with pretraining.
 
 ![Difference in accuracies of DBN with and without pretraining](figure/DBN.jpg)
 
-**Figure 2. Difference in accuracies of DBN with and without pretraining.**
+**Figure 3. Difference in accuracies of DBN with and without pretraining.**
 
 The image of handwritten digits input reconstructed with pretrained DBN is shown in Figure 4.
 
