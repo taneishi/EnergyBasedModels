@@ -1,122 +1,94 @@
-# Energy-Based Models in PyTorch
+# Energy-Based Models with PyTorch
 
 ## Introduction
 
-Energy-Based Models (EBM) are machine learning methods inspired by the concept of energy in physics.
-Examples of EBMs include the Restricted Boltzmann Machine (RBM), the Deep Belief Networks (DBN) introduced by Geoffrey Hinton in 2006,
-are well-known early implementations of deep learning.
+*Energy-Based Model*, **EBM** is a machine learning method based on the concept of energy in physics. 
+Examples of EBMs include *Restricted Boltzmann Machine*, **RBM**, and *Deep Belief Network*, **DBN**, 
+which was introduced by Geoffrey Hinton in 2006, which is known as one of the earliest examples of *Deep Learning*[1].
 
-EBM determines the dependencies between input and latent variables by associating them to scalar values representing the energy in the system.
-It is based on the property that a low entropy state gives a better representation of the regularity of the subject.
-Thus, the EBM can perform unsupervised learning.
+EBM determines the dependencies between input and latent variables by associating them to real values representing the energy in the system. 
+This is based on the physical law that a low entropy state gives a better representation of the regularity of the subject of interest.
+Thus, EBM is essentially *unsupervised learning*, which can be interpreted as achieving the regularity underlying the subject, i.e., **feature extraction**. 
+This is one of the basic ideas on which deep learning was established, although in a different form afterwards.
 
-Here I use PyTorch implementations of RBM and DBN to train and validate the accuracy of the image reconstruction task,
-and then reconstruct the images from the trained model to confirm that the data has been learned well.
+Here, we take the problem of classifying handwritten digits as an example and verify the effect on learning accuracy by employing RBM and DBN to perform feature extraction as **pretraining**.
+We also reconstruct images from the trained models in this process to visually confirm how the features underlying the dataset were extracted.
 
 ## Restricted Boltzmann Machine
 
-RBM is a generative energy-based model consisting of two symmetric graphs.
-The two graphs can be rephrased as a visible layer and a hidden layer.
-Nodes in the visible layer correspond to input variables and nodes in the hidden layer correspond to latent variables.
-Nodes in the same graph (i.e. in the same layer) have no connections, while all visible nodes and all hidden nodes have undirected connections.
-This restriction that no connections in the same graph is what is meant by *restricted*.
-Without this restriction, it is simply called Boltzmann Machine.
-The lack of directionality in the connections allows for outputs from latent variables to input variables, thus RBM is a generative model.
+RBM is one of the simplest EBMs consisting of two graphs.
+The two graphs are called the *visible layer* and the *hidden layer*, respectively, from the side closer to the input. 
+Nodes in the visible layer correspond to input variables and nodes in the hidden layer correspond to latent variables. 
+Nodes in the same graph, i.e. in the same layer, have no connections, while all visible nodes are connected to all hidden nodes and all hidden nodes are connected to all visible nodes. Therefore, the connections between these layers are symmetric and have no direction.
+Having no connections in the same graph is what is meant by *restricted*, while allowing the connections in the same graph is *Boltzmann Machine*.
+Since the connections are not directional, the computation in RBM is reversible, i.e., it is possible to propagate from latent variables to input variables in the opposite direction of learning. As a consequence, RBM is a *generative model*.
 
-The following shows the process of training handwritten numbers from 0 to 9 using RBM and the results of reconstructing the original handwritten numbers using the trained model.
+For the dataset, we use MNIST, which provides the problem of classifying handwritten digits from 0 to 9.
 
-<p align="center">
-<img src="images/RBM.jpg" alt="RBM loss and acc" width="500px" />
-<p>
+First, the classification is performed by *supervised learning* using the smallest *multilayer perceptron*, MLP, which consists of a single hidden layer. 
+The weights from the input layer to the hidden layer are initialized by random values. 
+Next, we pretrain the weights from the input layer to the hidden layer in unsupervised learning using RBM, 
+and assign the weights to the hidden layer of MLP for supervised learning.
+Therefore, it is necessary to align the same number of units in the hidden layers of MLP and RBM.
+This supervised learning after pretraining is called *fine-tuning*.
+We compare and verify the accuracy achieved as a result of each learning process.
 
-```
-Unsupervised pretraining of Restricted Boltzmann Machine
-epoch   5/  5 train loss  0.068 12.8sec
+The actual progress of the learning accuracy is shown in Table 1. 
+It can be seen that higher accuracies are achieved with pretraining.
 
-Training without pretraining
-epoch  1/ 5 train loss 1.684 train acc 0.789  6.3sec
-epoch  2/ 5 train loss 1.584 train acc 0.880  6.4sec
-epoch  3/ 5 train loss 1.517 train acc 0.947  6.4sec
-epoch  4/ 5 train loss 1.506 train acc 0.957  6.4sec
-epoch  5/ 5 train loss 1.498 train acc 0.965  6.3sec
+| epoch | test w/o PR | train w/o PR | test w/ PR | train w/ PR |
+| ----: | --------: | --------: | --------: | --------: |
+|     1 |    0.668 |    0.672 |    0.935 |    0.939 |
+|     2 |    0.759 |    0.769 |    0.953 |    0.960 |
+|     3 |    0.850 |    0.856 |    0.956 |    0.967 |
+|     4 |    0.917 |    0.927 |    0.960 |    0.972 |
+|     5 |    0.937 |    0.946 |    0.967 |    0.980 |
 
-Training with pretraining
-epoch  1/ 5 train loss 1.560 train acc 0.918  6.4sec
-epoch  2/ 5 train loss 1.500 train acc 0.965  6.4sec
-epoch  3/ 5 train loss 1.488 train acc 0.976  6.4sec
-epoch  4/ 5 train loss 1.481 train acc 0.982  6.4sec
-epoch  5/ 5 train loss 1.477 train acc 0.986  6.4sec
-```
+**Table 1. Difference in accuracy of MLP with and without pretraining by RBM.**
 
-<p align="center">
-<img src="images/RBM_digits.jpg" alt="RBM digits" width="500px" />
-</p>
+Figure 1. shows the image of handwritten digits reconstructed with pretrained RBM.
 
-## Deep Belief Networks
+![Reconstructed digits image with pretrained RBM.](images/RBM_digits.jpg)
 
-Multiple RBMs in the previous section can be stacked to form a network.
-After unsupervised learning with multiple RBMs, supervised fine-tune can be performed using stochastic gradient descent (SGD) and back-propagation,
-which are fundamental methods in deep learning.
-DBN is a network with this configuration.
+**Figure 1. Reconstructed handwritten digits image with pretrained RBM.**
 
-DBN is generative because it is derived from RBM, and it is a graphical model in which input variables are represented by connections of latent variables.
-Inheriting the characteristics of RBM, there are connections between different layers, but no connections within the same layer.
+## Deep Belief Network
 
-In a stacked configuration of multiple RBMs, unsupervised learning can be performed for each RBM by applying contrast divergence (CD) to each RBM in order from the layer closest to the input.
-In this case, the visible layer closest to the input is connected to the input data, and the hidden layer of each RBM is connected to the visible layer of the next RBM.
+Even before *deep learning*, it was known that multilayer neural networks have the potential to learn more complex subjects because they are hierarchical and have many learning parameters. 
+On the other hand, multilayer neural networks have issues such as *vanishing gradient* and *overfitting*, making it difficult to effectively progress the learning process.
 
-Like RBM, DBN learn to probabilistically reconstruct the input in unsupervised learning.
-At this point, each RBM can be thought of as performing feature detection in each stage.
-After unsupervised learning in each RBM, the entire DBN can be fine-tuned for supervised classification.
+DBN is one of the answers to these problems. A multilayer neural network is constructed by stacking multiple RBMs, 
+and unsupervised learning is performed on each RBM to extract features step by step.
+Unsupervised learning is performed in the order from the layer closest to the input, with the visible layer of the RBM closest to the input being directly connected to the input, and the visible layers of the other RBMs being connected to the hidden layers of the RBMs on the side closer to the input.
+In this pretrained multilayer neural network is less prone to vanishing gradient and overfitting due to the feature extraction at each stage.
+A neural network with this configuration is called a DBN.
 
-To add a historical note, there were known problems such as exploding gradient and vanishing gradient when learning deep neural networks,
-but DBN could learn even with deep layers by pre-training in each RBM.
-This is one of the reasons why DBN was used in early deep learning.
+DBN is a *generative model* because they are derived from RBMs, and it is also a *graphical model* in which input variables are represented by the combination of latent variables.
 
-As with RBM, the learning process and reconstruction results are shown below.
+The process of accuracy achieved by actually training with the DBN is shown in Table 2. Again, higher accuracy is achieved with pretraining.
 
-<p align="center">
-<img src="images/DBN.jpg" alt="DBN loss and acc" width="500px" />
-</p>
+| epoch | test w/o PR | train w/o PR | test w/ PR | train w/ PR |
+| ----: | -------: | -------: | -------: | -------: |
+|     1 |    0.741 |    0.745 |    0.929 |    0.931 |
+|     2 |    0.832 |    0.837 |    0.950 |    0.958 |
+|     3 |    0.853 |    0.860 |    0.957 |    0.969 |
+|     4 |    0.927 |    0.934 |    0.962 |    0.976 |
+|     5 |    0.940 |    0.949 |    0.965 |    0.979 |
 
-```
-Unsupervised pretraining of Deep Belief Network
-epoch 100/100 train loss  0.085  1.9sec
-Finished Training Layer: 0 to 1
-epoch 100/100 train loss  0.165  0.5sec
-Finished Training Layer: 1 to 2
-epoch 100/100 train loss  0.187  0.4sec
-Finished Training Layer: 2 to 3
-epoch 100/100 train loss  0.244  0.4sec
-Finished Training Layer: 3 to 4
+**Table 2. Difference in training accuracy of DBN with and without pretraining for each RBM.**
 
-Training without pretraining
-epoch  1/ 5 train loss 1.813 train acc 0.667  4.579sec
-epoch  2/ 5 train loss 1.563 train acc 0.905  4.735sec
-epoch  3/ 5 train loss 1.516 train acc 0.949  4.724sec
-epoch  4/ 5 train loss 1.504 train acc 0.958  4.741sec
-epoch  5/ 5 train loss 1.497 train acc 0.965  4.755sec
+The image of handwritten digits input reconstructed with pretrained DBN is shown in Figure 2.
 
-Training with pretraining
-The Last layer will not be activated. The rest are activated using the Sigmoid Function
-epoch  1/ 5 train loss 1.702 train acc 0.820  4.721sec
-epoch  2/ 5 train loss 1.507 train acc 0.960  4.714sec
-epoch  3/ 5 train loss 1.493 train acc 0.971  4.727sec
-epoch  4/ 5 train loss 1.485 train acc 0.978  4.698sec
-epoch  5/ 5 train loss 1.480 train acc 0.983  4.733sec
-```
+![Reconstructed handwritten digits images with pretrained DBN.](images/DBN_digits.jpg)
 
-<p align="center">
-<img src="images/DBN_digits.jpg" alt="DBN digits" width="500px" />
-</p>
+**Figure 2. Reconstructed handwritten digits images with pretrained DBN.**
 
 ## Applications
 
-As an example of my work, I applied DBN to a virtual screening task for drug discovery in 2014, and the paper describing the results was published in 2016.
-Virtual screening based on the Quantitative Structure-Activity Relationship (QSAR) is suitable for early deep learning because it deals with scalar vectors that represent drug candidate compounds as input.
+As the applications of my work, I applied DBN to a virtual screening for drug discovery in 2014, 
+and the paper summarizing the results was published in 2017.
+A virtual screening based on *Quantitative Structure-Activity Relationship*, QSAR was suitable for early deep learning because it deals with real vectors representing drug candidate compounds as input.
 
-## References
+## Reference
 
-- Hinton et al., *A fast learning algorithm for deep belief nets*, Neural Computation, 2006.
-- Theano Development Team, [*Deep Learning Tutorials*](https://deeplearningtutorials.readthedocs.io/), 2008-2013.
-
+- [1] Hinton, G.E. et al., *A fast learning algorithm for deep belief nets*, **Neural Computation**, 2006.
