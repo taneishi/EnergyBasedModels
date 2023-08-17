@@ -78,7 +78,7 @@ def train(device, net, epochs=5, batch_size=64):
         test_loss /= len(test_loader)
         test_acc /= len(test_loader)
 
-        progress.append([epoch+1, test_loss, train_loss, test_acc, train_acc])
+        progress.append([epoch, test_loss, train_loss, test_acc, train_acc])
 
     return progress
 
@@ -99,14 +99,14 @@ if __name__ == '__main__':
 
     print('Unsupervised pretraining of Deep Belief Network')
     for layer in dbn.train(train_x, epochs=100, batch_size=128):
-        print('Finished Training Layer: %d to %d' % (layer, layer+1))
+        print(f'Finished Training Layer: {layer} to {layer+1}')
 
     print('Training without pretraining.')
     net = Net()
 
     progress = train(device, net)
     progress = pd.DataFrame(np.array(progress))
-    progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
+    progress.columns = ['epoch', 'test loss', 'train loss', 'test acc', 'train acc']
     progress.to_csv('results/DBN_without_pretraining.csv', index=False)
 
     print('Training with pretraining.')
@@ -114,5 +114,5 @@ if __name__ == '__main__':
     dbn_net = torch.nn.Sequential(dbn.net(), torch.nn.Softmax(dim=1))
     progress = train(device, dbn_net)
     progress = pd.DataFrame(np.array(progress))
-    progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
+    progress.columns = ['epoch', 'test loss', 'train loss', 'test acc', 'train acc']
     progress.to_csv('results/DBN_with_pretraining.csv', index=False)

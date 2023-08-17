@@ -33,24 +33,18 @@ Therefore, it is necessary to align the same number of units in the hidden layer
 This supervised learning after pretraining is called *fine-tuning*.
 We compare and verify the accuracy achieved as a result of each learning process.
 
-The actual progress of the learning accuracy is shown in Table 1. 
+The actual progresses of the accuracies are shown in Table 1. 
 It can be seen that higher accuracies are achieved with pretraining.
 
-| epoch | test w/o PR | train w/o PR | test w/ PR | train w/ PR |
-| ----: | --------: | --------: | --------: | --------: |
-|     1 |    0.668 |    0.672 |    0.935 |    0.939 |
-|     2 |    0.759 |    0.769 |    0.953 |    0.960 |
-|     3 |    0.850 |    0.856 |    0.956 |    0.967 |
-|     4 |    0.917 |    0.927 |    0.960 |    0.972 |
-|     5 |    0.937 |    0.946 |    0.967 |    0.980 |
+![Difference in accuracies of MLP with and without pretraining by RBM](figure/RBM.png)
 
-**Table 1. Difference in accuracy of MLP with and without pretraining by RBM.**
+**Figure 1. Difference in accuracy of MLP with and without pretraining by RBM.**
 
-Figure 1. shows the image of handwritten digits reconstructed with pretrained RBM.
+Figure 2. shows the image of handwritten digits reconstructed with pretrained RBM.
 
 ![Reconstructed digits image with pretrained RBM.](images/RBM_digits.jpg)
 
-**Figure 1. Reconstructed handwritten digits image with pretrained RBM.**
+**Figure 2. Reconstructed handwritten digits image with pretrained RBM.**
 
 ## Deep Belief Network
 
@@ -65,23 +59,18 @@ A neural network with this configuration is called a DBN.
 
 DBN is a *generative model* because they are derived from RBMs, and it is also a *graphical model* in which input variables are represented by the combination of latent variables.
 
-The process of accuracy achieved by actually training with the DBN is shown in Table 2. Again, higher accuracy is achieved with pretraining.
+The transitions of accuracies achieved by actually training with DBN is shown in Figure 3.
+Again, higher accuracy is achieved with pretraining.
 
-| epoch | test w/o PR | train w/o PR | test w/ PR | train w/ PR |
-| ----: | -------: | -------: | -------: | -------: |
-|     1 |    0.741 |    0.745 |    0.929 |    0.931 |
-|     2 |    0.832 |    0.837 |    0.950 |    0.958 |
-|     3 |    0.853 |    0.860 |    0.957 |    0.969 |
-|     4 |    0.927 |    0.934 |    0.962 |    0.976 |
-|     5 |    0.940 |    0.949 |    0.965 |    0.979 |
+![Difference in accuracies of DBN with and without pretraining](figure/DBN.png)
 
-**Table 2. Difference in training accuracy of DBN with and without pretraining for each RBM.**
+**Figure 2. Difference in accuracies of DBN with and without pretraining.**
 
-The image of handwritten digits input reconstructed with pretrained DBN is shown in Figure 2.
+The image of handwritten digits input reconstructed with pretrained DBN is shown in Figure 4.
 
 ![Reconstructed handwritten digits images with pretrained DBN.](images/DBN_digits.jpg)
 
-**Figure 2. Reconstructed handwritten digits images with pretrained DBN.**
+**Figure 4. Reconstructed handwritten digits images with pretrained DBN.**
 
 ## Applications
 

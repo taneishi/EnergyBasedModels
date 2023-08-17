@@ -15,7 +15,7 @@ def plot(filename, model, metrics, condition, split):
     linestyle = '--' if split == 'Training' else '-'
     color = 2 if condition.startswith('without') else 1
 
-    plt.plot(range(1, df.shape[0]+1), df[col], label=f'{split} {condition}',
+    plt.plot(df['epoch'], df[col], label=f'{split} {condition}',
             linestyle=linestyle, color=f'C{color}')
     plt.legend(fontsize=16)
     plt.xticks(range(1, df.shape[0]+1))
@@ -42,4 +42,4 @@ if __name__ == '__main__':
                         model, metrics, condition, split)
        
         plt.tight_layout()
-        plt.savefig(f'images/{model}.jpg', dpi=80)
+        plt.savefig(f'images/{model}.jpg', dpi=100)

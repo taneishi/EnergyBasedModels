@@ -73,7 +73,7 @@ def train(device, net, epochs, batch_size):
         test_loss /= len(test_loader)
         test_acc /= len(test_loader)
 
-        progress.append([epoch+1, test_loss, train_loss, test_acc, train_acc])
+        progress.append([epoch, test_loss, train_loss, test_acc, train_acc])
 
     return progress
 
@@ -100,18 +100,16 @@ def main(epochs=5, batch_size=64):
         print('epoch %3d/%3d train loss %6.3f' % (epoch, epochs, progress[-1]), end='')
         print(' %4.1fsec' % (timeit.default_timer() - start_time))
 
-    print('Training without pretraining')
-
+    print('Training without pretraining.')
     net = Net()
 
     progress = train(device, net, epochs, batch_size)
 
     progress = pd.DataFrame(np.array(progress))
-    progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
+    progress.columns = ['epoch', 'test loss', 'train loss', 'test acc', 'train acc']
     progress.to_csv('results/RBM_without_pretraining.csv', index=False)
 
-    print('Training with pretraining')
-
+    print('Training with pretraining.')
     net = Net()
 
     net[0].weight = torch.nn.Parameter(rbm.W)
@@ -120,7 +118,7 @@ def main(epochs=5, batch_size=64):
     progress = train(device, net, epochs, batch_size)
 
     progress = pd.DataFrame(np.array(progress))
-    progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
+    progress.columns = ['epoch', 'test loss', 'train loss', 'test acc', 'train acc']
     progress.to_csv('results/RBM_with_pretraining.csv', index=False)
 
 if __name__ == '__main__':
