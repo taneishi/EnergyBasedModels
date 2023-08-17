@@ -36,7 +36,7 @@ We compare and verify the accuracy achieved as a result of each learning process
 The actual progresses of the accuracies are shown in Table 1. 
 It can be seen that higher accuracies are achieved with pretraining.
 
-![Difference in accuracies of MLP with and without pretraining by RBM](figure/RBM.png)
+![Difference in accuracies of MLP with and without pretraining by RBM](figure/RBM.jpg)
 
 **Figure 1. Difference in accuracy of MLP with and without pretraining by RBM.**
 
@@ -62,7 +62,7 @@ DBN is a *generative model* because they are derived from RBMs, and it is also a
 The transitions of accuracies achieved by actually training with DBN is shown in Figure 3.
 Again, higher accuracy is achieved with pretraining.
 
-![Difference in accuracies of DBN with and without pretraining](figure/DBN.png)
+![Difference in accuracies of DBN with and without pretraining](figure/DBN.jpg)
 
 **Figure 2. Difference in accuracies of DBN with and without pretraining.**
 
