@@ -42,7 +42,7 @@ It can be seen that higher accuracies are achieved with pretraining.
 
 Figure 2. shows the image of handwritten digits reconstructed with pretrained RBM.
 
-![Reconstructed digits image with pretrained RBM.](images/RBM_digits.jpg)
+![Reconstructed digits image with pretrained RBM.](figure/RBM_digits.jpg)
 
 **Figure 2. Reconstructed handwritten digits image with pretrained RBM.**
 
@@ -68,9 +68,9 @@ Again, higher accuracy is achieved with pretraining.
 
 The image of handwritten digits input reconstructed with pretrained DBN is shown in Figure 4.
 
-![Reconstructed handwritten digits images with pretrained DBN.](images/DBN_digits.jpg)
+![Reconstructed handwritten digits image with pretrained DBN.](figure/DBN_digits.jpg)
 
-**Figure 4. Reconstructed handwritten digits images with pretrained DBN.**
+**Figure 4. Reconstructed handwritten digits image with pretrained DBN.**
 
 ## Applications
 

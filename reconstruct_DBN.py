@@ -8,7 +8,7 @@ import os
 from DBN import DBN
 
 if __name__ == '__main__':
-    os.makedirs('images', exist_ok=True)
+    os.makedirs('figure', exist_ok=True)
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     device = torch.device(device)
@@ -17,8 +17,6 @@ if __name__ == '__main__':
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=len(test_dataset))
     for test_x, test_y in test_loader:
         test_x = test_x.view(-1, 784)
-
-    os.makedirs('images_DBN/digitwise', exist_ok=True)
 
     layers = [512, 128, 64, 10]
     dbn = DBN(device, test_x.shape[1], layers)
@@ -51,25 +49,19 @@ if __name__ == '__main__':
         hidden_image = hidden_image.astype(np.int32)
         gen_image = gen_image.astype(np.int32)
 
-        prefix = 'images_DBN/digitwise/%d_' % (n)
-        suffix = '_image.jpg'
-        
         plt.subplot(5, 6, 1 + n*3)
         plt.imshow(image, cmap='gray')
         plt.title('original image')
-        plt.savefig(prefix+'original'+suffix)
 
         plt.subplot(5, 6, 2 + n*3)
         plt.imshow(hidden_image, cmap='gray')
         plt.title('hidden image')
-        plt.savefig(prefix+'hidden'+suffix)
 
         plt.subplot(5, 6, 3 + n*3)
         plt.imshow(gen_image, cmap='gray')
         plt.title('reconstructed image')
-        plt.savefig(prefix+'reconstructed'+suffix)
 
         print(f'generated images for digit {n}')
 
     plt.tight_layout()
-    plt.savefig('images/DBN_digits.jpg', dpi=20)
+    plt.savefig('figure/DBN_digits.jpg', dpi=20)

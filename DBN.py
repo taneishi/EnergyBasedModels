@@ -57,16 +57,21 @@ class DBN:
 
             rbm = RBM(self.device, vn, hn, mode='bernoulli', lr=0.0005, k=10, optimizer='adam')
             x_dash = self.generate_input_for_layer(index, x)
-            rbm.train(x_dash, epochs=epochs, batch_size=batch_size, early_stopping_patience=10)
+
+            for progress in rbm.train(x_dash, epochs=epochs, batch_size=batch_size, early_stopping_patience=10):
+                pass
+
             self.layer_parameters[index]['W'] = rbm.W.cpu()
             self.layer_parameters[index]['hb'] = rbm.hb.cpu()
             self.layer_parameters[index]['vb'] = rbm.vb.cpu()
-            yield index
+            
+            yield index, progress[-1]
 
         if self.savefile is not None:
             torch.save(self.layer_parameters, self.savefile)
 
     def reconstructor(self, x):
+        # hidden
         x_gen = []
         for _ in range(self.k):
             x_dash = x.clone()
@@ -78,6 +83,7 @@ class DBN:
 
         y = x_dash
 
+        # reconstruction
         y_gen = []
         for _ in range(self.k):
             y_dash = y.clone()
@@ -94,7 +100,7 @@ class DBN:
         modules = []
         for index, layer in enumerate(self.layer_parameters):
             modules.append(torch.nn.Linear(layer['W'].shape[1], layer['W'].shape[0]))
-            if index < len(self.layer_parameters) - 1:
+            if index < len(self.layer_parameters)-1:
                 modules.append(torch.nn.Sigmoid())
         model = torch.nn.Sequential(*modules)
 

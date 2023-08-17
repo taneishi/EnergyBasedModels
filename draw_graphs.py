@@ -28,7 +28,7 @@ def plot(filename, model, metrics, condition, split):
         plt.ylim([0, 1])
 
 if __name__ == '__main__':
-    os.makedirs('images', exist_ok=True)
+    os.makedirs('figure', exist_ok=True)
 
     metrics = 'acc'
     conditions = ['without_pretraining', 'with_pretraining']
@@ -42,4 +42,4 @@ if __name__ == '__main__':
                         model, metrics, condition, split)
        
         plt.tight_layout()
-        plt.savefig(f'images/{model}.jpg', dpi=100)
+        plt.savefig(f'figure/{model}.jpg', dpi=100)

@@ -98,8 +98,8 @@ if __name__ == '__main__':
     dbn = DBN(device, train_x.shape[1], layers, savefile='models/mnist_trained_dbn.pt')
 
     print('Unsupervised pretraining of Deep Belief Network')
-    for layer in dbn.train(train_x, epochs=100, batch_size=128):
-        print(f'Finished Training Layer: {layer} to {layer+1}')
+    for layer, loss in dbn.train(train_x, epochs=100, batch_size=128):
+        print(f'Finished Training Layer {layer} to {layer+1} loss: {loss:5.3f}')
 
     print('Training without pretraining.')
     net = Net()
