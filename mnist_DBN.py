@@ -56,7 +56,7 @@ def train(device, net, epochs=5, batch_size=64):
 
         train_loss /= len(train_loader)
         train_acc /= len(train_loader)
-        print('epoch %2d/%2d train loss %5.3f train acc %5.3f' % (epoch, epochs, train_loss, train_acc), end='')
+        print('epoch %2d/%2d train loss %5.3f acc %5.3f' % (epoch, epochs, train_loss, train_acc), end='')
         print(' %6.3fsec' % (timeit.default_timer() - start_time))
 
         test_loss = 0
@@ -98,19 +98,21 @@ if __name__ == '__main__':
     dbn = DBN(device, train_x.shape[1], layers, savefile='models/mnist_trained_dbn.pt')
 
     print('Unsupervised pretraining of Deep Belief Network')
-    dbn.train(train_x, epochs=100, batch_size=128)
+    for layer in dbn.train(train_x, epochs=100, batch_size=128):
+        print('Finished Training Layer: %d to %d' % (layer, layer+1))
 
-    print('\nTraining without pretraining')
+    print('Training without pretraining.')
     net = Net()
 
     progress = train(device, net)
     progress = pd.DataFrame(np.array(progress))
     progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
-    progress.to_csv('results/DBN_without_pretraining_classifier.csv', index=False)
+    progress.to_csv('results/DBN_without_pretraining.csv', index=False)
 
-    print('\nTraining with pretraining')
+    print('Training with pretraining.')
+    print('Layers are activated using the Sigmoid Function except for the last layer.')
     dbn_net = torch.nn.Sequential(dbn.net(), torch.nn.Softmax(dim=1))
     progress = train(device, dbn_net)
     progress = pd.DataFrame(np.array(progress))
     progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
-    progress.to_csv('results/DBN_with_pretraining_classifier.csv', index=False)
+    progress.to_csv('results/DBN_with_pretraining.csv', index=False)

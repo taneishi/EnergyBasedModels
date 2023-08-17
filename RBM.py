@@ -80,7 +80,6 @@ class RBM:
 
         # Number of iterations to run the algorithm for
         for epoch in range(1, epochs+1):
-            start_time = timeit.default_timer()
             train_loss = 0
             counter = 0
             for batch_start_index in range(0, dataset.shape[0]-batch_size, batch_size):
@@ -96,21 +95,19 @@ class RBM:
                 train_loss += torch.mean(torch.abs(v0-vk))
                 counter += 1
             
-            self.progress.append(train_loss.item()/counter)
+            self.progress.append(train_loss.item() / counter)
 
-            print('\repoch %3d/%3d train loss %6.3f' % (epoch, epochs, train_loss.item() / counter), end='')
-            print(' %4.1fsec' % (timeit.default_timer() - start_time), end='')
+            yield self.progress
 
             if train_loss.item() / counter > self.previous_loss_before_stagnation and epoch > early_stopping_patience+1:
                 self.stagnation += 1
-                if self.stagnation == early_stopping_patience-1:
-                    print('\nNot Improving the stopping training loop.')
+                if self.stagnation == early_stopping_patience - 1:
+                    # Not Improving the stopping training loop.
                     break
             else:
                 self.previous_loss_before_stagnation = train_loss.item() / counter
                 self.stagnation = 0
 
-        print('')
         if self.savefile is not None:
             model = {'W':self.W, 'vb':self.vb, 'hb':self.hb}
             torch.save(model, self.savefile)

@@ -52,7 +52,7 @@ def train(device, net, epochs, batch_size):
         train_loss /= len(train_loader)
         train_acc /= len(train_loader)
 
-        print('epoch %2d/%2d train loss %5.3f train acc %5.3f' % (epoch, epochs, train_loss, train_acc), end='')
+        print('epoch %2d/%2d train loss %5.3f acc %5.3f' % (epoch, epochs, train_loss, train_acc), end='')
         print(' %4.1fsec' % (timeit.default_timer() - start_time))
 
         test_loss = 0
@@ -94,9 +94,13 @@ def main(epochs=5, batch_size=64):
     rbm = RBM(device, vn, hn, savefile='models/mnist_trained_rbm.pt')
 
     print('Unsupervised pretraining of Restricted Boltzmann Machine')
-    rbm.train(train_x, epochs=5, batch_size=32, early_stopping_patience=5)
+    start_time = timeit.default_timer()
+    epochs = 5
+    for epoch, progress in enumerate(rbm.train(train_x, epochs=epochs, batch_size=32, early_stopping_patience=5), 1):
+        print('epoch %3d/%3d train loss %6.3f' % (epoch, epochs, progress[-1]), end='')
+        print(' %4.1fsec' % (timeit.default_timer() - start_time))
 
-    print('\nTraining without pretraining')
+    print('Training without pretraining')
 
     net = Net()
 
@@ -104,9 +108,9 @@ def main(epochs=5, batch_size=64):
 
     progress = pd.DataFrame(np.array(progress))
     progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
-    progress.to_csv('results/RBM_without_pretraining_classifier.csv', index=False)
+    progress.to_csv('results/RBM_without_pretraining.csv', index=False)
 
-    print('\nTraining with pretraining')
+    print('Training with pretraining')
 
     net = Net()
 
@@ -117,7 +121,7 @@ def main(epochs=5, batch_size=64):
 
     progress = pd.DataFrame(np.array(progress))
     progress.columns = ['epochs', 'test loss', 'train loss', 'test acc', 'train acc']
-    progress.to_csv('results/RBM_with_pretraining_classifier.csv', index=False)
+    progress.to_csv('results/RBM_with_pretraining.csv', index=False)
 
 if __name__ == '__main__':
     main()

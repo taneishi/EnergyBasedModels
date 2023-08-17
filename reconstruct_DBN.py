@@ -8,6 +8,8 @@ import os
 from DBN import DBN
 
 if __name__ == '__main__':
+    os.makedirs('images', exist_ok=True)
+
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     device = torch.device(device)
 
@@ -28,6 +30,10 @@ if __name__ == '__main__':
         x = test_x[np.where(test_y==n)[0][0]]
         x = x.unsqueeze(0)
         gen_image, hidden_image = dbn.reconstructor(x)
+
+        #print(f'MAE (mean absolute error) of an all 0 reconstructor: {torch.mean(x).item():5.3f}')
+        #print(f'MAE between reconstructed and original sample: {torch.mean(torch.abs(gen_image - x)).item():5.3f}')
+
         gen_image = gen_image.numpy()
         hidden_image = hidden_image.numpy()
         image = x.numpy()
@@ -63,7 +69,7 @@ if __name__ == '__main__':
         plt.title('reconstructed image')
         plt.savefig(prefix+'reconstructed'+suffix)
 
-        print('generated images for digit %d' % (n))
+        print(f'generated images for digit {n}')
 
     plt.tight_layout()
     plt.savefig('images/DBN_digits.jpg', dpi=20)

@@ -61,18 +61,12 @@ class DBN:
             self.layer_parameters[index]['W'] = rbm.W.cpu()
             self.layer_parameters[index]['hb'] = rbm.hb.cpu()
             self.layer_parameters[index]['vb'] = rbm.vb.cpu()
-            print('Finished Training Layer: %d to %d' % (index, index+1))
+            yield index
 
         if self.savefile is not None:
             torch.save(self.layer_parameters, self.savefile)
 
     def reconstructor(self, x):
-        '''
-        dbn.train(dataset)
-        y = dbn.reconstructor(dataset)
-        print('MAE of an all 0 reconstructor:', torch.mean(dataset).item())
-        print('MAE between reconstructed and original sample:', torch.mean(torch.abs(y - dataset)).item())
-        '''
         x_gen = []
         for _ in range(self.k):
             x_dash = x.clone()
@@ -97,7 +91,6 @@ class DBN:
         return y_dash, x_dash
 
     def net(self):
-        print('Layers are activated using the Sigmoid Function except for the last layer.')
         modules = []
         for index, layer in enumerate(self.layer_parameters):
             modules.append(torch.nn.Linear(layer['W'].shape[1], layer['W'].shape[0]))

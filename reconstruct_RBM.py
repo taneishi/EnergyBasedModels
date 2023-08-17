@@ -8,6 +8,8 @@ import os
 from RBM import RBM
 
 if __name__ == '__main__':
+    os.makedirs('images', exist_ok=True)
+
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     device = torch.device(device)
 
@@ -67,7 +69,7 @@ if __name__ == '__main__':
         plt.imshow(gen_image, cmap='gray')
         plt.title('reconstructed image')
 
-        print('generated images for digit %d' % (n))
+        print(f'generated images for digit {n:d}')
 
     plt.tight_layout()
     plt.savefig('images/RBM_digits.jpg', dpi=20)
