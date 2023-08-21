@@ -51,11 +51,11 @@ Figure 2. shows the image of handwritten digits reconstructed with pretrained RB
 Even before *deep learning*, it was known that multilayer neural networks have the potential to learn more complex subjects because they are hierarchical and have many learning parameters.
 On the other hand, multilayer neural networks have issues such as *vanishing gradient* and *overfitting*, making it difficult to effectively progress the learning process.
 
-DBN is one of the answers to these problems. A multilayer neural network is constructed by stacking multiple RBMs,
-and unsupervised learning is performed on each RBM to extract features step by step.
+DBN is one of the answers to these problems, where each layer of a multilayered neural network corresponds to RBM,
+and unsupervised pretraining is performed in each RBM to extract hierarchical features step by step.
 Unsupervised learning is performed in the order from the layer closest to the input, with the visible layer of the RBM closest to the input being directly connected to the input, and the visible layers of the other RBMs being connected to the hidden layers of the RBMs on the side closer to the input.
 In this pretrained multilayer neural network is less prone to vanishing gradient and overfitting due to the feature extraction at each stage.
-A neural network with this configuration is called a DBN.
+A pretrained MLP with a single RBM can be considered a minimal DBN.
 
 DBN is a *generative model* because they are derived from RBMs, and it is also a *graphical model* in which input variables are represented by the combination of latent variables.
 
@@ -80,4 +80,4 @@ A virtual screening based on *Quantitative Structure-Activity Relationship*, QSA
 
 ## Reference
 
-- [1] Hinton, G.E. et al., *A fast learning algorithm for deep belief nets*, **Neural Computation**, 2006.
+- [1] G.E. Hinton et al., *A fast learning algorithm for deep belief nets*, **Neural Computation**, 2006.
