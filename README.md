@@ -1,7 +1,7 @@
 # Deep-Belief-Networks-in-PyTorch
 The aim of this repository is to create RBMs, EBMs and DBNs in generalized manner, so as to allow modification and variation in model types.
 
-### This repository has been executed and verified on 8th October 2023 [details below!](https://github.com/AmanPriyanshu/Deep-Belief-Networks-in-PyTorch/blob/main/README.md#execution-latest-08102023)
+### This repository has been executed and verified on 22nd September 2024 [details below!](https://github.com/AmanPriyanshu/Deep-Belief-Networks-in-PyTorch/blob/main/README.md#execution-latest-08102023)
 
 ## RBM:
 
@@ -128,7 +128,7 @@ epochs | test loss | train loss | test acc | train acc
 ![Image-8](./images_DBN/8.jpg)
 ![Image-9](./images_DBN/9.jpg)
 
-## Execution (Latest: 08/10/2023)
+## Execution (Latest: 22nd September 2024)
 
 The code is tested with the version of torch: v1.11.0
 
