@@ -18,7 +18,7 @@ First, the classification is performed by *supervised learning* using the smalle
 
 Actually, comparing the accuracy up to 5 epochs with and without pretraining, the accuracy on the test set without pretraining is 0.937, while the accuracy with pretraining is 0.967, confirming that pretraining improves the accuracy.
 
-The reconstructed images of the handwritten digits used for input with this pretrained RBM is shown in Fig 1.
+The reconstructed images of the handwritten digits used for input with this pretrained RBM is shown in Figure 1.
 
 ![RBM_digits](figure/RBM_digits.jpg)
 
@@ -32,7 +32,7 @@ DBN is one of the answers to these problems, where each layer of a multilayered 
 
 DBN is a generative model because they are derived from RBM, and it is also a *graphical model* in which input variables are represented by the combination of latent variables.
 
-Comparing the accuracies obtained by training up to 5 epochs with DBN is 0.940 without pretraining and 0.965 with pretraining, and again, the accuracy is higher with pretraining. The images of the handwritten digit for input reconstructed with the pretrained DBN model is shown in Fig 2.
+Comparing the accuracies obtained by training up to 5 epochs with DBN is 0.940 without pretraining and 0.965 with pretraining, and again, the accuracy is higher with pretraining. The images of the handwritten digit for input reconstructed with the pretrained DBN model is shown in Figure 2.
 
 ![DBN_digits](figure/DBN_digits.jpg)
 

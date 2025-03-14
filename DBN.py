@@ -71,7 +71,7 @@ class DBN:
             torch.save(self.layer_parameters, self.savefile)
 
     def reconstructor(self, x):
-        # hidden
+        # Hidden
         x_gen = []
         for _ in range(self.k):
             x_dash = x.clone()
@@ -83,7 +83,7 @@ class DBN:
 
         y = x_dash
 
-        # reconstruction
+        # Reconstruction
         y_gen = []
         for _ in range(self.k):
             y_dash = y.clone()

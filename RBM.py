@@ -24,7 +24,7 @@ class RBM:
 
         self.device = device
 
-        # Initialize weights and biases
+        # Initialize weights and biases.
         std = 4 * np.sqrt(6. / (self.n_visible + self.n_hidden))
         self.W = torch.normal(mean=0, std=std, size=(self.n_hidden, self.n_visible))
         self.vb = torch.zeros(size=(1, self.n_visible), dtype=torch.float32)
@@ -78,7 +78,7 @@ class RBM:
     def train(self, dataset, epochs, batch_size, early_stopping_patience):
         dataset = dataset.to(self.device)
 
-        # Number of iterations to run the algorithm for
+        # Number of iterations to run the algorithm for.
         for epoch in range(1, epochs+1):
             train_loss = 0
             counter = 0
