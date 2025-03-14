@@ -1,4 +1,3 @@
-import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 import torch
@@ -36,7 +35,7 @@ if __name__ == '__main__':
         hidden_image = hidden_image.numpy()
         image = x.numpy()
 
-        # revert transforms.ToTensor() scaling
+        # Revert transforms.ToTensor() scaling.
         image = (image*255)[0]
         hidden_image = (hidden_image*255)[0]
         gen_image = (gen_image*255)[0]

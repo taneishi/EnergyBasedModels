@@ -105,14 +105,12 @@ if __name__ == '__main__':
     net = Net()
 
     progress = train(device, net)
-    progress = pd.DataFrame(np.array(progress))
-    progress.columns = ['epoch', 'test loss', 'train loss', 'test acc', 'train acc']
-    progress.to_csv('results/DBN_without_pretraining.csv', index=False)
+    progress = pd.DataFrame(progress, columns=['epoch', 'test loss', 'train loss', 'test acc', 'train acc'])
+    print(progress.round(3))
 
     print('Training with pretraining.')
     print('Layers are activated using the Sigmoid Function except for the last layer.')
     dbn_net = torch.nn.Sequential(dbn.net(), torch.nn.Softmax(dim=1))
     progress = train(device, dbn_net)
-    progress = pd.DataFrame(np.array(progress))
-    progress.columns = ['epoch', 'test loss', 'train loss', 'test acc', 'train acc']
-    progress.to_csv('results/DBN_with_pretraining.csv', index=False)
+    progress = pd.DataFrame(progress, columns=['epoch', 'test loss', 'train loss', 'test acc', 'train acc'])
+    print(progress.round(3))
