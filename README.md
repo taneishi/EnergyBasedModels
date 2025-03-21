@@ -1,4 +1,4 @@
-# Energy-Based Models
+# Energy-Based Models using PyTorch
 
 ## Introduction
 
